@@ -1,5 +1,5 @@
 ---
-title: "c123ian.github.io"
+title: "Cian Prendergast"
 listing:
   contents: posts
   sort: "date desc"

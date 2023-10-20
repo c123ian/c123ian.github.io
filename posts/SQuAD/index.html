@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Extractive Question Answering with Data from Dell Forums ⛏️</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="squad_files/libs/clipboard/clipboard.min.js"></script>
+<script src="squad_files/libs/quarto-html/quarto.js"></script>
+<script src="squad_files/libs/quarto-html/popper.min.js"></script>
+<script src="squad_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="squad_files/libs/quarto-html/anchor.min.js"></script>
+<link href="squad_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="squad_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="squad_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="squad_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="squad_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><strong>Extractive Question Answering with Data from Dell Forums</strong> ⛏️</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p><em>By Cian Prendergast</em></p>
+<p>Hello there, data enthusiasts! Today, we’re diving deep into the world of Extractive Question Answering (QA). For those unfamiliar, extractive QA is all about pinpointing exact answers from large text sources. Imagine being able to instantly find the solution to a hardware issue from an ocean of forum posts. Sounds cool, right? Let’s get started!</p>
+<section id="lets-dive-into-scraping" class="level4">
+<h4 class="anchored" data-anchor-id="lets-dive-into-scraping"><strong>Let’s Dive into Scraping!</strong></h4>
+<p><strong>Why Dell?</strong><br>
+We’ve chosen the Dell support forums, specifically the <a href="https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/PowerEdge-General-HW">PowerEdge-Hardware-General</a> section, as our data source. These forums are a goldmine of real-world hardware issues and their solutions, making them perfect for our project.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="squad_files/figure-html/5f449bbe-ddbf-414c-98e8-8c0b0ac6e49f-1-295c6d82-cdae-4761-8482-e3bb724cbefb.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p><strong>The Challenge</strong>:<br>
+Web scraping isn’t always a walk in the park. We encountered some challenges like: - The pesky “Accept Cookies” button (a special shoutout to our EU-based networks!). - The need to filter posts by “Solved” cases, ensuring we only get the cream of the crop. - The “Load More” button that seemed to play hard-to-get by moving further down with each click.</p>
+<p>But fear not! With a sprinkle of Python, a pinch of Selenium, and a dash of patience, we tackled these issues head-on.</p>
+<p><strong>The Solution</strong>:<br>
+To deal with the increasing page length, we used a mix of <code>time.sleep()</code> and the <code>execute_script</code> method. This allowed us to ensure that every time we reached the bottom of the webpage, we could successfully click the “Load More” button and grab more data. For the curious, our code looks something like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> click_accept_cookies_button(driver):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Click the 'Accept All' button for cookies."""</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    accept_button <span class="op">=</span> WebDriverWait(driver, <span class="dv">10</span>).until(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>        EC.element_to_be_clickable((By.XPATH, <span class="st">'//a[@aria-label="allow cookies"]'</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    accept_button.click()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> select_solved_option(driver):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Select the 'Solved' option from the dropdown."""</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    select_element <span class="op">=</span> driver.find_element(By.ID, <span class="st">'messages-loader-type'</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    option_solved <span class="op">=</span> select_element.find_element(By.XPATH, <span class="st">"//option[@value='solved']"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    option_solved.click()</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> scroll_to_bottom(driver):</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Scroll to the bottom of the page."""</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    driver.execute_script(<span class="st">"window.scrollTo(0, document.body.scrollHeight);"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> click_load_more(driver, num_clicks):</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Click the 'Load more' button the specified number of times."""</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(num_clicks):</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>        load_more_button <span class="op">=</span> WebDriverWait(driver, <span class="dv">10</span>).until(EC.element_to_be_clickable((By.ID, <span class="st">'btn-load-more'</span>)))</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>        time.sleep(<span class="dv">3</span>)  <span class="co"># Wait before clicking</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>        scroll_to_bottom(driver)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>        time.sleep(<span class="dv">3</span>)  <span class="co"># Wait after scrolling</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        load_more_button.click()</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        time.sleep(<span class="dv">6</span>)  <span class="co"># Wait after clicking</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_urls(driver):</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Extract and return all href URLs on the page."""</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    urls <span class="op">=</span> driver.find_elements(By.XPATH, <span class="st">'//a[@href]'</span>)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [url.get_attribute(<span class="st">'href'</span>) <span class="cf">for</span> url <span class="kw">in</span> urls]</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> automate_dell_forum(num_clicks):</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Instantiate the Selenium web driver</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    driver <span class="op">=</span> webdriver.Chrome()</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    driver.maximize_window()  <span class="co"># Maximize the browser window</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Navigate to the Dell community forum page</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    driver.get(<span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/PowerEdge-General-HW'</span>)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    click_accept_cookies_button(driver)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    select_solved_option(driver)</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Wait for the page to load after selecting "Solved" option</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">2</span>)</span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a>    scroll_to_bottom(driver)</span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="dv">2</span>)  <span class="co"># Wait before clicking "Load more"</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    click_load_more(driver, num_clicks)</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Extract URLs</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a>    url_list <span class="op">=</span> extract_urls(driver)</span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Close the Selenium web driver</span></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    driver.quit()</span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> url_list</span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a><span class="co"># Refactored function usage remains the same</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>url_list <span class="op">=</span> automate_dell_forum(<span class="dv">189</span>)  <span class="co"># To run with 189 clicks</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After some clicks and scrolls, we saved the scraped URLs to a CSV file and a text file. We now have a treasure trove of forum posts ready for our next steps!</p>
+<blockquote class="blockquote">
+<p>If your wondering how I was able to figure out which HTML elements to target, its simple a matter of using a browsers Developer Tools and going down the tree, seeing what gets highlighted. I will go into more details in a future blog post!</p>
+</blockquote>
+<hr>
+</section>
+<section id="filtering-and-cleaning-getting-the-best-data" class="level3">
+<h3 class="anchored" data-anchor-id="filtering-and-cleaning-getting-the-best-data"><strong>Filtering and Cleaning: Getting the Best Data</strong></h3>
+<p>Once we scraped our data, we were left with a vast list of URLs. However, not every URL was relevant to our goals. To sift through the noise and get to the good stuff, we implemented a filtering function:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> filtered_urls(url_list):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    filtered_urls <span class="op">=</span> []</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    exclude_urls <span class="op">=</span> [</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/PowerEdge-General-HW#'</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        <span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/custom.dell.link.solutions.href'</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/custom.dell.link.careers.href'</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/custom.dell.link.about.href'</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/bd-p/PowerEdge-General-HW'</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> url <span class="kw">in</span> url_list:</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> url.startswith(<span class="st">'https://www.dell.com/community/PowerEdge-Hardware-General/'</span>) <span class="kw">and</span> url <span class="kw">not</span> <span class="kw">in</span> exclude_urls:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            filtered_urls.append(url)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> filtered_urls</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the urls</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>filtered_urls <span class="op">=</span> filtered_urls(url_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="extracting-the-essence-questions-and-answers" class="level3">
+<h3 class="anchored" data-anchor-id="extracting-the-essence-questions-and-answers"><strong>Extracting the Essence: Questions and Answers</strong></h3>
+<p>With our refined list of URLs, we proceeded to extract the real treasures: the questions and answers from the forum posts.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="squad_files/figure-html/967fb9e4-fa6e-41a7-b8c4-112b80359a0b-1-4c04298c-7661-4834-9dfd-a0f02ace2f25.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>Using the power of BeautifulSoup, we devised a function to navigate each URL and fetch the required data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_elements_with_class(urls, class_name):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    elements_list <span class="op">=</span> []</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    session <span class="op">=</span> requests.Session()</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> url <span class="kw">in</span> tqdm(urls, desc<span class="op">=</span><span class="st">"Extracting elements"</span>):</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            response <span class="op">=</span> session.get(url)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>            soup <span class="op">=</span> BeautifulSoup(response.content, <span class="st">'html.parser'</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            elements <span class="op">=</span> soup.find_all(class_<span class="op">=</span>class_name, limit<span class="op">=</span><span class="dv">2</span>)  <span class="co"># Limit to the first two elements</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> element <span class="kw">in</span> elements:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>                elements_list.append(element.text.strip())</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">2</span> <span class="op">-</span> <span class="bu">len</span>(elements)):</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>                elements_list.append(<span class="st">""</span>)  <span class="co"># Append empty strings if elements are not found</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> requests.exceptions.RequestException:</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            elements_list.extend([<span class="st">""</span>, <span class="st">""</span>])  <span class="co"># Append empty strings if there's an error</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> elements_list</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>class_name <span class="op">=</span> <span class="st">"lia-message-body-content"</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>extracted_elements <span class="op">=</span> extract_elements_with_class(filtered_urls, class_name)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure extracted_elements has an even number of elements</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(extracted_elements) <span class="op">%</span> <span class="dv">2</span> <span class="op">!=</span> <span class="dv">0</span>:</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    extracted_elements.append(<span class="st">""</span>)  <span class="co"># Append an empty string to make it even</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the extracted elements into Questions and Answers lists</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>Questions <span class="op">=</span> extracted_elements[::<span class="dv">2</span>]</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>Answers <span class="op">=</span> extracted_elements[<span class="dv">1</span>::<span class="dv">2</span>]</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a dataframe called QA</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>QA <span class="op">=</span> pd.DataFrame({<span class="st">"Questions"</span>: Questions, <span class="st">"Answers"</span>: Answers})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This function allowed us to neatly segment our data into questions and their corresponding answers, paving the way for the creation of our <code>QA_large</code> DataFrame.</p>
+<p>Data is most useful when it’s clean and organized. To this end, we saved our carefully curated dataset into a CSV file:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>QA_large.to_csv(<span class="st">'QA_large_cleaned.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="squad-format-with-haystack-annotation" class="level3">
+<h3 class="anchored" data-anchor-id="squad-format-with-haystack-annotation"><strong>SQUaD Format with Haystack Annotation</strong></h3>
+<p>Models trained alreasy on the SQuAD dataset will <a href="https://github.com/nlp-with-transformers/notebooks">expect new smaller closed domain datasets to follow the same strucure</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="squad_files/figure-html/5f93c9a7-c870-41f9-8b76-26047dbc260b-3-cfe7af0e-6637-48b7-8798-726d5d9513c9.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>This is where the <a href="https://www.deepset.ai/blog/labeling-data-with-haystack-annotation-tool">Haystack Annoptation tool</a> comes in, not only is its a GUI that allows us to highlight answer spans, it automatically exports in the expected SQuAD nested JSON format!</p>
+<blockquote class="blockquote">
+<p><strong>Please note:</strong> Deepset will shortly no longer support the online tool, you will have to run it locally via Docker, please see details <a href="https://docs.haystack.deepset.ai/docs/annotation#installing-the-local-version-docker">here</a>.</p>
+</blockquote>
+<p>For importing our data into the annptation tool, we must use comma separated <code>CSVs</code> and include the header in the first line. You might also want to wrap text around quotation marks, e.g.&nbsp;if it contains commas. We always use pandas <code>to_csv</code> method, this should format the file in the right way.</p>
+<p>Example:</p>
+<pre><code>docs.csv:
+document_identifier,document_text
+id1,bbbbb
+id2,muh</code></pre>
+<p>the same holds for the questions.csv:</p>
+<pre><code>question,document_identifier,question_identifier
+question1,id1,qid1
+question2,id2,qid2
+</code></pre>
+<p>We can no use the tool to highlight relevant passages from the community answers:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="squad_files/figure-html/5f93c9a7-c870-41f9-8b76-26047dbc260b-2-8869d97b-c815-412d-95f0-21b39e1834c0.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>Once we have highlighted the answer spans, we can export and save as JSON file (<code>Dell_QA_200.json)</code>. Now are dataset is structured as so:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'Dell_QA_200.json'</span>, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> json.load(<span class="bu">file</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(json.dumps(data, indent<span class="op">=</span><span class="dv">4</span>))  <span class="co"># A pretty print to visualize the dataset.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>{
+    "data": [
+        {
+            "paragraphs": [
+                {
+                    "qas": [
+                        {
+                            "question": "Does v9 license works with v8 platform?When I try to import the v9 license I am having this error. LIC017.\u00a0",
+                            "id": 1082044,
+                            "answers": [
+                                {
+                                    "answer_id": 980739,
+                                    "document_id": 1619992,
+                                    "question_id": 1082044,
+                                    "text": "IDRAC v9 license is not compatible with iDRAC V8 platforms.",
+                                    "answer_start": 0,
+                                    "answer_end": 59,
+                                    "answer_category": null
+                                }
+                            ],
+                            "is_impossible": false
+                        }
+                    ],
+                    "context": "IDRAC v9 license is not compatible with iDRAC V8 platforms. IDRAC license is tied with each system and you will not be able to install on another system other than the server it is intended.Thanks,DELL-Shine K#IWork4DellView solution in original post",
+                    "document_id": 1619992
+                }</code></pre>
+</section>
+<section id="question-and-answer-length" class="level3">
+<h3 class="anchored" data-anchor-id="question-and-answer-length"><strong>Question and Answer Length</strong></h3>
+<p>Later we come across an issue with the Haystack annotation tool and its restriction to 255 characters for questions. So lets quickly check how many questions exceed that length limit:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the length of each text entry in 'column_1'</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'text_length'</span>] <span class="op">=</span> df[<span class="st">'document_text'</span>].<span class="bu">str</span>.<span class="bu">len</span>()</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate average, highest, and lowest length</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>average_length <span class="op">=</span> df[<span class="st">'text_length'</span>].mean()</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>max_length <span class="op">=</span> df[<span class="st">'text_length'</span>].<span class="bu">max</span>()</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>min_length <span class="op">=</span> df[<span class="st">'text_length'</span>].<span class="bu">min</span>()</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate percentage of entries with length greater than 255 characters</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>percentage_over_255 <span class="op">=</span> (df[df[<span class="st">'text_length'</span>] <span class="op">&gt;</span> <span class="dv">255</span>].shape[<span class="dv">0</span>] <span class="op">/</span> df.shape[<span class="dv">0</span>]) <span class="op">*</span> <span class="dv">100</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Average Length: </span><span class="sc">{</span>average_length<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Maximum Length: </span><span class="sc">{</span>max_length<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Minimum Length: </span><span class="sc">{</span>min_length<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Percentage of Texts over 255 characters: </span><span class="sc">{</span>percentage_over_255<span class="sc">:.2f}</span><span class="ss">%"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Average Length: 597.39
+Maximum Length: 27039
+Minimum Length: 0
+Percentage of Texts over 255 characters: 79.01%</code></pre>
+<p>We can also plot these:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming you have already calculated 'average_length' and have a DataFrame 'df'</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>plt.hist(df[<span class="st">'text_length'</span>], bins<span class="op">=</span><span class="dv">50</span>, <span class="bu">range</span><span class="op">=</span>(<span class="dv">0</span>, <span class="dv">3000</span>), color<span class="op">=</span><span class="st">'skyblue'</span>, edgecolor<span class="op">=</span><span class="st">'black'</span>)  <span class="co"># Adjusted bins and range</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>plt.axvline(average_length, color<span class="op">=</span><span class="st">'red'</span>, linestyle<span class="op">=</span><span class="st">'dashed'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, label<span class="op">=</span><span class="ss">f"Average Length: </span><span class="sc">{</span>average_length<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>plt.axvline(<span class="dv">255</span>, color<span class="op">=</span><span class="st">'green'</span>, linestyle<span class="op">=</span><span class="st">'dotted'</span>, linewidth<span class="op">=</span><span class="dv">1</span>, label<span class="op">=</span><span class="st">"Length: 255 characters"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Distribution of Text Lengths in 'column_1'"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Text Length'</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Number of Entries'</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>plt.grid(axis<span class="op">=</span><span class="st">'y'</span>)</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="squad_files/figure-html/5f93c9a7-c870-41f9-8b76-26047dbc260b-1-5a6ce0be-9efc-4ef5-8545-b994981e763d.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="char-limit" class="level3">
+<h3 class="anchored" data-anchor-id="char-limit"><strong>255 char limit</strong></h3>
+<p>We’ve observed that a significant portion of questions are longer than 255 characters. This isn’t surprising given the need for detailed explanations of technical challenges and prior troubleshooting. This unexpected length initially led us to truncate questions, unfortunately losing valuable information. Going forward, we could segment longer questions and later recombine them after annotation. Alternatively, we could narrow our focus to questions of 255 characters or fewer, but this would exclude a vast 79% of our dataset. Importantly, there’s no character limit for answers, a design influenced by the original SQuAD’s emphasis on concise questions derived from comprehensive Wikipedia content.</p>
+<p>My approach, while inspired by SQuAD and the <a href="https://arxiv.org/abs/1911.02984">TechQA project</a>, focuses more on real-world, detailed questions and succinct forum answers. Solely highlighting articles referenced in answers, like how-to guides, would mean losing vital reasoning context. Consider the example below:</p>
+<p><img src="squad_files/figure-html/f5e042da-02b2-4dce-93be-999c7c48f444-1-67838888-a0c2-4ac9-a936-b15183a92e22.png" width="800"></p>
+<p>Using only the firmware landing page linked <a href="https://dell.to/3dVsINv">here</a> from the above answer would deprive us of essential “step-by-step update” details.</p>
+</section>
+<section id="training-the-dell-qa-model-a-deep-dive" class="level3">
+<h3 class="anchored" data-anchor-id="training-the-dell-qa-model-a-deep-dive"><strong>Training the Dell QA Model: A Deep Dive</strong></h3>
+<p>So our dataset is stored in a file named <code>Dell_QA_200.json</code>. We can transform this intricate JSON structure into a more palatable DataFrame:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rows <span class="op">=</span> []</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> dat <span class="kw">in</span> data[<span class="st">'data'</span>]:</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> paragraph <span class="kw">in</span> dat[<span class="st">'paragraphs'</span>]:</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>        context <span class="op">=</span> paragraph[<span class="st">'context'</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> qa <span class="kw">in</span> paragraph[<span class="st">'qas'</span>]:</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>            question <span class="op">=</span> qa[<span class="st">'question'</span>]</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> answer <span class="kw">in</span> qa[<span class="st">'answers'</span>]:</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>                answer_text <span class="op">=</span> answer[<span class="st">'text'</span>]</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>                answer_start <span class="op">=</span> answer[<span class="st">'answer_start'</span>]</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>                rows.append([question, answer_text, answer_start, context])</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(rows, columns<span class="op">=</span>[<span class="st">'question'</span>, <span class="st">'answers.text'</span>, <span class="st">'answers.answer_start'</span>, <span class="st">'context'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="crafting-the-traintest-split" class="level3">
+<h3 class="anchored" data-anchor-id="crafting-the-traintest-split">Crafting the Train/Test Split</h3>
+<p>Before diving into training, it’s crucial to split our dataset. We’ve reserved 80% for training and set aside the remaining 20% for testing:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>random.shuffle(squad_data[<span class="st">"data"</span>])</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>train_size <span class="op">=</span> <span class="bu">int</span>(<span class="fl">0.8</span> <span class="op">*</span> <span class="bu">len</span>(squad_data[<span class="st">"data"</span>]))</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>test_size <span class="op">=</span> <span class="bu">len</span>(squad_data[<span class="st">"data"</span>]) <span class="op">-</span> train_size</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>train_data <span class="op">=</span> squad_data[<span class="st">"data"</span>][:train_size]</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> squad_data[<span class="st">"data"</span>][train_size:]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Saving them for posterity (and our model!)</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'Dell_QA_200_train.json'</span>, <span class="st">'w'</span>) <span class="im">as</span> train_file:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    json.dump({<span class="st">"data"</span>: train_data}, train_file)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">'Dell_QA_200_test.json'</span>, <span class="st">'w'</span>) <span class="im">as</span> test_file:</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    json.dump({<span class="st">"data"</span>: test_data}, test_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<hr>
+</section>
+<section id="tokenization-the-first-step-towards-understanding" class="level2">
+<h2 class="anchored" data-anchor-id="tokenization-the-first-step-towards-understanding"><strong>Tokenization: The First Step Towards Understanding</strong></h2>
+<p>Welcome back! If you remember from our last post, we dived deep into preparing our data. This time, let’s talk about how we make sense of this data: <strong>Tokenization</strong>.</p>
+<section id="whats-tokenization-anyway" class="level3">
+<h3 class="anchored" data-anchor-id="whats-tokenization-anyway">What’s Tokenization Anyway?</h3>
+<p>In simple terms, tokenization is the process of converting our text (questions and contexts) into smaller chunks, called tokens. This is an essential step because our models don’t understand text as we do; they understand numbers. Tokens are a bridge between human-readable text and machine-understandable numbers.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> AutoTokenizer</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>model_ckpt <span class="op">=</span> <span class="st">"deepset/minilm-uncased-squad2"</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>tokenizer <span class="op">=</span> AutoTokenizer.from_pretrained(model_ckpt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Using a sample question and context, we can see tokenization in action:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>question <span class="op">=</span> <span class="st">"How much music can this hold?"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>context <span class="op">=</span> <span class="st">"""An MP3 is about 1 MB/minute, so about 6000 hours depending on file size."""</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>inputs <span class="op">=</span> tokenizer(question, context, return_tensors<span class="op">=</span><span class="st">"pt"</span>)</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>input_df <span class="op">=</span> pd.DataFrame.from_dict(tokenizer(question, context), orient<span class="op">=</span><span class="st">"index"</span>)</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>input_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+0
+</th>
+<th>
+1
+</th>
+<th>
+2
+</th>
+<th>
+3
+</th>
+<th>
+4
+</th>
+<th>
+5
+</th>
+<th>
+6
+</th>
+<th>
+7
+</th>
+<th>
+8
+</th>
+<th>
+9
+</th>
+<th>
+…
+</th>
+<th>
+18
+</th>
+<th>
+19
+</th>
+<th>
+20
+</th>
+<th>
+21
+</th>
+<th>
+22
+</th>
+<th>
+23
+</th>
+<th>
+24
+</th>
+<th>
+25
+</th>
+<th>
+26
+</th>
+<th>
+27
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+input_ids
+</th>
+<td>
+101
+</td>
+<td>
+2129
+</td>
+<td>
+2172
+</td>
+<td>
+2189
+</td>
+<td>
+2064
+</td>
+<td>
+2023
+</td>
+<td>
+2907
+</td>
+<td>
+1029
+</td>
+<td>
+102
+</td>
+<td>
+2019
+</td>
+<td>
+…
+</td>
+<td>
+2061
+</td>
+<td>
+2055
+</td>
+<td>
+25961
+</td>
+<td>
+2847
+</td>
+<td>
+5834
+</td>
+<td>
+2006
+</td>
+<td>
+5371
+</td>
+<td>
+2946
+</td>
+<td>
+1012
+</td>
+<td>
+102
+</td>
+</tr>
+<tr>
+<th>
+token_type_ids
+</th>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+0
+</td>
+<td>
+1
+</td>
+<td>
+…
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+<tr>
+<th>
+attention_mask
+</th>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+…
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+<td>
+1
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>
+3 rows × 28 columns
+</p>
+</div>
+</section>
+<section id="simplifying-with-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="simplifying-with-pipelines"><strong>Simplifying with Pipelines</strong></h3>
+<p><code>Transformers</code> offer a nifty feature called pipelines, which simplifies our QA process:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> transformers <span class="im">import</span> pipeline</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> pipeline(<span class="st">"question-answering"</span>, model<span class="op">=</span>model, tokenizer<span class="op">=</span>tokenizer)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>pipe(question<span class="op">=</span>question, context<span class="op">=</span>context, topk<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>But what if our context doesn’t contain the answer? The pipeline gracefully handles such scenarios:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pipe(question<span class="op">=</span><span class="st">"Why is there no data?"</span>, context<span class="op">=</span>context, handle_impossible_answer<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>{'score': 0.906841516494751, 'start': 0, 'end': 0, 'answer': ''}</code></pre>
+<hr>
+</section>
+<section id="sliding-windows-seeing-the-bigger-picture" class="level3">
+<h3 class="anchored" data-anchor-id="sliding-windows-seeing-the-bigger-picture"><strong>Sliding Windows: Seeing the Bigger Picture</strong></h3>
+<p>Remember the challenge of tokenizing long passages? The sliding window approach is our knight in shining armor. By using <code>return_overflowing_tokens=True</code> and specifying a <code>stride</code>, we ensure that our model gets overlapping views of a passage without missing any potential answers.</p>
+<p>Let’s see it in action:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>example <span class="op">=</span> df.iloc[<span class="dv">0</span>][[<span class="st">"question"</span>, <span class="st">"context"</span>]]</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>tokenized_example <span class="op">=</span> tokenizer(example[<span class="st">"question"</span>], example[<span class="st">"context"</span>], </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                              return_overflowing_tokens<span class="op">=</span><span class="va">True</span>, max_length<span class="op">=</span><span class="dv">100</span>, </span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>                              stride<span class="op">=</span><span class="dv">25</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Each window has a specific number of tokens:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx, window <span class="kw">in</span> <span class="bu">enumerate</span>(tokenized_example[<span class="st">"input_ids"</span>]):</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Window #</span><span class="sc">{</span>idx<span class="sc">}</span><span class="ss"> has </span><span class="sc">{</span><span class="bu">len</span>(window)<span class="sc">}</span><span class="ss"> tokens"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Window #0 has 89 tokens
+</code></pre>
+<p>When we decode these tokens, we can visualize the overlapping windows:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> window <span class="kw">in</span> tokenized_example[<span class="st">"input_ids"</span>]:</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>tokenizer<span class="sc">.</span>decode(window)<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>[CLS] does v9 license works with v8 platform? when i try to import the v9 license i am having this error. lic017. [SEP] idrac v9 license is not compatible with idrac v8 platforms. idrac license is tied with each system and you will not be able to install on another system other than the server it is intended. thanks, dell - shine k # iwork4dellview solution in original post [SEP] </code></pre>
+<p>With this setup, our model gets a comprehensive view of the context, ensuring we don’t miss out on potential answers.</p>
+</section>
+<section id="elasticsearch-turbocharging-our-qa-system" class="level3">
+<h3 class="anchored" data-anchor-id="elasticsearch-turbocharging-our-qa-system"><strong>ElasticSearch: Turbocharging Our QA System</strong></h3>
+<p>ElasticSearch is a powerhouse for search and analytics. It’s our chosen tool to index and retrieve relevant contexts efficiently when posing questions.</p>
+<p>Setting it up involves:</p>
+<ol type="1">
+<li>Downloading ElasticSearch:</li>
+</ol>
+<div class="sourceCode" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">"https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-8.9.0-linux-x86_64.tar.gz"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>wget <span class="op">-</span>nc <span class="op">-</span>q {url}</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>tar <span class="op">-</span>xzf elasticsearch<span class="op">-</span><span class="fl">8.9.0</span><span class="op">-</span>linux<span class="op">-</span>x86_64.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="2" type="1">
+<li>Performing system configurations:</li>
+</ol>
+<div class="sourceCode" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sudo usermod <span class="op">-</span>aG docker $USER</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>sudo reboot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Installing required packages:</li>
+</ol>
+<div class="sourceCode" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span>pip install <span class="op">--</span>upgrade numexpr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With ElasticSearch in place, our QA system is turbocharged, ensuring rapid and accurate retrievals.</p>
+</section>
+<section id="launching-elasticsearch-the-docker-way" class="level3">
+<h3 class="anchored" data-anchor-id="launching-elasticsearch-the-docker-way"><strong>Launching ElasticSearch (The Docker Way)</strong></h3>
+<p>For those using Docker, here’s a quick way to get ElasticSearch up and running:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> haystack.utils <span class="im">import</span> launch_es</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>launch_es()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A quick check to ensure ElasticSearch is running:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="ex">!curl</span> <span class="at">-X</span> GET <span class="st">"localhost:9200/?pretty"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="populating-elasticsearch-from-dataframe-to-documentstore" class="level3">
+<h3 class="anchored" data-anchor-id="populating-elasticsearch-from-dataframe-to-documentstore"><strong>Populating ElasticSearch: From DataFrame to DocumentStore</strong></h3>
+<p>To make our data retrievable, we need to format it appropriately and populate our ElasticSearch index:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>docs <span class="op">=</span> []</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert DataFrame rows to dictionary format for the DocumentStore</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> _, row <span class="kw">in</span> df.iterrows():</span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    doc <span class="op">=</span> {</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>        <span class="st">'content'</span>: row[<span class="st">'context'</span>], </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">'meta'</span>: {}  <span class="co"># You can add additional metadata here if needed.</span></span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    docs.append(doc)</span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Populate the DocumentStore</span></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>document_store.write_documents(docs, index<span class="op">=</span><span class="st">"document"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="bm25-simple-yet-powerful" class="level3">
+<h3 class="anchored" data-anchor-id="bm25-simple-yet-powerful"><strong>BM25: Simple Yet Powerful</strong></h3>
+<p>BM25 is a classic technique in information retrieval. Let’s initialize it and see it in action:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> haystack.nodes.retriever <span class="im">import</span> BM25Retriever</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>bm25_retriever <span class="op">=</span> BM25Retriever(document_store<span class="op">=</span>document_store)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A quick retrieval test:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> <span class="st">"How to fix my KVM?"</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>retrieved_docs <span class="op">=</span> bm25_retriever.retrieve(query<span class="op">=</span>query, top_k<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(retrieved_docs[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>&lt;Document: id=1a93a3494d130482abb1d9341f3a4642, content='With a KVM  you really will need to do some deductive troubleshooting.If port one is the only port w...'&gt;</code></pre>
+</section>
+<section id="dense-passage-retrieval-dpr" class="level3">
+<h3 class="anchored" data-anchor-id="dense-passage-retrieval-dpr"><strong>Dense Passage Retrieval (DPR)</strong></h3>
+<p>While BM25 is great, there’s another retrieval technique on the horizon: DPR. It’s a more advanced method that uses deep learning to understand context and provide better results. You can learn more about DPR <a href="https://huggingface.co/docs/transformers/model_doc/dpr">here</a>.</p>
+<p>DPR offers a more granular retrieval technique, diving deeper into our contexts to find the most relevant snippets:</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> haystack.nodes <span class="im">import</span> DensePassageRetriever</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>dpr_retriever <span class="op">=</span> DensePassageRetriever(</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    document_store<span class="op">=</span>document_store,</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    query_embedding_model<span class="op">=</span><span class="st">"facebook/dpr-question_encoder-single-nq-base"</span>,</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    passage_embedding_model<span class="op">=</span><span class="st">"facebook/dpr-ctx_encoder-single-nq-base"</span>,</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    embed_title<span class="op">=</span><span class="va">False</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>With DPR initialized, it’s time to update our document embeddings:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>document_store.update_embeddings(retriever<span class="op">=</span>dpr_retriever)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-power-of-pipelines" class="level3">
+<h3 class="anchored" data-anchor-id="the-power-of-pipelines"><strong>The Power of Pipelines</strong></h3>
+<p>By combining our retriever and reader, we form a powerful QA pipeline:</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> haystack.pipelines <span class="im">import</span> ExtractiveQAPipeline</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>pipe <span class="op">=</span> ExtractiveQAPipeline(reader<span class="op">=</span>reader, retriever<span class="op">=</span>dpr_retriever)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s see this in action:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>n_answers <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> pipe.run(query<span class="op">=</span>query, params<span class="op">=</span>{<span class="st">"Retriever"</span>: {<span class="st">"top_k"</span>: <span class="dv">3</span>}, </span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"Reader"</span>: {<span class="st">"top_k"</span>: n_answers}})</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Answer </span><span class="sc">{</span>idx<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>preds[<span class="st">'answers'</span>][idx]<span class="sc">.</span>answer<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> idx <span class="kw">in</span> <span class="bu">range</span>(n_answers):</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Question </span><span class="sc">{</span>idx<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>preds[<span class="st">'answers'</span>][idx]<span class="sc">.</span>answer<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Answer snippet: ...</span><span class="sc">{</span>preds[<span class="st">'answers'</span>][idx]<span class="sc">.</span>context<span class="sc">}</span><span class="ss">..."</span>)</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Question 3: I want to buy DDR3L HPE 647883-B21 16Gb DIMM ECC Reg PC3-10600 CL9This modules may not be supported.Kingston for Dell (317-6142 370-20147) DDR3 DIMM 16GB (PC3-10600) 1333MHz ECC Registered Low Voltage ModuleThis module can be used.
+Answer snippet: ....I want to buy DDR3L HPE 647883-B21 16Gb DIMM ECC Reg PC3-10600 CL9This modules may not be supported.Kingston for Dell (317-6142 370-20147) DDR3 DIMM 16GB (PC3-10600) 1333MHz ECC Registered Low Voltage ModuleThis module can be used....</code></pre>
+</section>
+<section id="fine-tuning-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-evaluation"><strong>Fine-Tuning &amp; Evaluation</strong></h3>
+<p>While our models are pretrained on diverse data, fine-tuning helps adapt them to our specific use case:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_and_evaluate():</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize model, optimizer, loss function, etc.</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>    train_filename <span class="op">=</span> <span class="st">"Dell_QA_200_train.json"</span></span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    dev_filename <span class="op">=</span> <span class="st">"Dell_QA_200_test.json"</span></span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>    test_filename <span class="op">=</span> <span class="st">"Dell_QA_200_test.json"</span>  <span class="co"># or another test file</span></span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    data_dir <span class="op">=</span> Path(<span class="st">"."</span>)  <span class="co"># using pathlib's Path</span></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>    save_dir <span class="op">=</span> <span class="st">"./model"</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fine-tuning your model</span></span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>    reader.train(data_dir<span class="op">=</span>data_dir, use_gpu<span class="op">=</span><span class="va">True</span>, n_epochs<span class="op">=</span><span class="dv">1</span>, batch_size<span class="op">=</span><span class="dv">16</span>,</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>                 train_filename<span class="op">=</span>train_filename, save_dir<span class="op">=</span>save_dir)</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Evaluate the model</span></span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> reader.eval_on_file(data_dir<span class="op">=</span>data_dir, test_filename<span class="op">=</span>test_filename, device<span class="op">=</span><span class="st">"cuda"</span> <span class="cf">if</span> torch.cuda.is_available() <span class="cf">else</span> <span class="st">"cpu"</span>)</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(result)</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Call the function to start the process</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>train_and_evaluate()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The above snippet demonstrates how we fine-tune our reader on the Dell QA dataset, optimizing it for our domain.</p>
+</section>
+<section id="metrics-the-scorecards-of-ai" class="level3">
+<h3 class="anchored" data-anchor-id="metrics-the-scorecards-of-ai"><strong>Metrics: The Scorecards of AI</strong></h3>
+<p>Evaluation is crucial in understanding how well our system performs. Some key metrics include:</p>
+<ul>
+<li><strong>Exact Match (EM)</strong>: Measures the percentage of predictions that match any one of the ground truth answers exactly.</li>
+<li><strong>F1 Score</strong>: Considers both the precision and the recall of the test to compute the score.</li>
+<li><strong>Top_n_accuracy</strong>: Evaluates how often the correct answer is within the top n retrieved results.</li>
+</ul>
+<p>After fine-tuning with <code>train_and_evaluate()</code>, our evaluation showcased impressive results:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>{</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a> <span class="st">'EM'</span>: <span class="fl">27.50</span>, <span class="st">'f1'</span>: <span class="fl">44.76</span>, <span class="st">'top_n_accuracy'</span>: <span class="fl">67.5</span>, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a> <span class="st">'top_n'</span>: <span class="dv">4</span>, <span class="st">'EM_text_answer'</span>: <span class="fl">24.32</span>, <span class="st">'f1_text_answer'</span>: <span class="fl">42.98</span>, </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a> ...</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These metrics offer a comprehensive view of our model’s performance, highlighting areas of excellence and potential improvement.</p>
+<hr>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h3>
+<p>So that is my attempt at using Exctractive QA! With Deepset dropping it support for the online version of Haystack Annotation tool, I suspect many people are moving towards Generative QA system - I will be doing a blog post on this shortly!</p>
+<p>My full code and datasets are <a href="https://github.com/c123ian/Dell_QA">here</a> on my GitHub.</p>
+<p>Happy coding!</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

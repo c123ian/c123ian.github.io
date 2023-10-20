@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>c123ian.github.io - Dell Technical Support Email Classification: A Deep Dive</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">c123ian.github.io</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Dell Technical Support Email Classification: A Deep Dive</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><em>by Cian Prendergast</em></p>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction"><strong>Introduction</strong></h3>
+<p>This is an old project but, seeing how a lot of ULMFiT tecniques are being redicovered, I thought I’d share it!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Dell_LSTM_Blog_files/figure-html/93f3b66a-fb7f-4b07-b5b4-9a0f1bf34961-2-4df2b11e-22a0-470a-b4cb-0a0dfce37389.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>Its essentially the <a href="https://github.com/fastai/fastbook/blob/master/10_nlp.ipynb">older fastai NLP lesson</a> from fastai course/book. ULMFit is both a training method and a type of model, where the model is tasked with predicting the next word in a sentence, and through this process learns about world concepts.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Dell_LSTM_Blog_files/figure-html/93f3b66a-fb7f-4b07-b5b4-9a0f1bf34961-3-854a3bc1-4f7a-4b4a-bc6c-662da3e92afd.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>Transformers like BERT (Bidirectional Encoder Representations from Transformers), don’t allow for this “predict the next word” method, instead they delete a word at random (mask it from the model) and ask the model to predict the deleted words. Other then that the concepts between ULMFiT and Transormers are essentially <a href="https://www.youtube.com/watch?v=toUgBQv1BT8">the same</a>.</p>
+<p>This project is phrased as a binary classification problem, the model is tasked to classify Dell Technical Support emails into ‘software’ or ‘hardware’ categories. Sourced from an in-house case scraping tool at Dell, we have a dataset comprising 1324 emails. Of these, 662 are labeled as software-related (‘sw’) and 662 as hardware-related (‘hw’). This labeling was done based on the domain knowledge of the researchers, and the data is stored in a CSV file with each email occupying one row.</p>
+<p>The approach we’ve taken in this notebook is based on <a href="https://paperswithcode.com/method/ulmfit#:~:text=Universal%20Language%20Model%20Fine%2Dtuning,-Introduced%20by%20Howard&amp;text=It%20involves%20a%203%2Dlayer%20AWD%2DLSTM%20architecture%20for%20its,classifier%20on%20the%20target%20task.">ULMFiT method</a>. We start with a pretrained language model, Wikitext103, which is already proficient in understanding the structure of the English language. This model is then tasked to predict whether a given email pertains to ‘sw’ or ‘hw’.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Dell_LSTM_Blog_files/figure-html/93f3b66a-fb7f-4b07-b5b4-9a0f1bf34961-1-06223dca-2bc9-48a6-b63c-9c3e51b2f1cd.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>But how do we feed these emails to the model? They undergo tokenization, where sentences are split into individual words. Additionally, to ensure each batch fed to the model is of uniform size, we utilize special tokens. For shorter emails, padding is done using a reserved token termed <code>xxunk</code>. This process also involves numericalizing the words to form a vocabulary, prioritizing words based on their frequency of occurrence.</p>
+<p>Yet, there’s always room for improvement. We further train our own language model tailored to Dell-specific vocabulary, built upon the LSTM architecture. This model is trained to predict subsequent words in a sentence.</p>
+<p>Lastly, we retrain our newly minted language model to classify the emails. We gradually unfreeze each layer, aiming for enhanced performance.</p>
+<hr>
+<p>Now, let’s extract the content related to the dataset and see how it’s structured.</p>
+</section>
+<section id="dataset" class="level3">
+<h3 class="anchored" data-anchor-id="dataset"><strong>Dataset</strong></h3>
+<p>Before diving into the intricacies of our model, it’s essential to get a firsthand look at the dataset we’re dealing with.</p>
+<p>The dataset is imported from a CSV file, and here’s how we load it into a Pandas dataframe:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'Dataset_CSV.csv'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>To get a glimpse of the dataset, let’s inspect the first 20 rows:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+label
+</th>
+<th>
+text
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+s
+</td>
+<td>
+Hi Technical support, We had an issue with the active controller today where emails as i will be the point of contact for this. Thanks.
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+s
+</td>
+<td>
+I can’t open web console
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+s
+</td>
+<td>
+I want update Dell blade server M910 Bios and iDRAC Firmware
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+s
+</td>
+<td>
+iDRAC card on this server appears to be non-functional. New one has been ordered but I am unable to locate the Dell iDRAC Enterprise License that needs to be loaded up to it, so they the card will offer iDRAC functions. I am requesting assistance locating that file.
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+s
+</td>
+<td>
+Our network switch has crashed and needs its software to be re-installed. However, we have no copys of the software - OS10
+</td>
+</tr>
+<tr>
+<th>
+5
+</th>
+<td>
+s
+</td>
+<td>
+Please provide iDRAC Enterprise license for PowerEdge M620 with after MB replacement.
+</td>
+</tr>
+<tr>
+<th>
+6
+</th>
+<td>
+s
+</td>
+<td>
+System crashed, purple screen of death. Please assist with troubleshooting root cause.
+</td>
+</tr>
+<tr>
+<th>
+7
+</th>
+<td>
+s
+</td>
+<td>
+Team, we have installed ESXi6.5U3 and need help for NVIDIA supported drives.
+</td>
+</tr>
+<tr>
+<th>
+8
+</th>
+<td>
+h
+</td>
+<td>
+Two drives in the array are showing solid amber lights but otherwise appear to be functioning correctly. Can’t get the GUI console to work. Appears that the software is too old to run on the version of Windows Server 2008R2. Trying to find
+</td>
+</tr>
+<tr>
+<th>
+9
+</th>
+<td>
+h
+</td>
+<td>
+VMWare showed a PSOD. Looks like a RAM Module died. TSR is attached to the ticket.
+</td>
+</tr>
+<tr>
+<th>
+10
+</th>
+<td>
+h
+</td>
+<td>
+We are currently experiencing an issue with the memory on this server, in the logs we are gettings the following error “Correctable memory error rate exceeded for DIMM_B8”. Please see the TSR logs attached.
+</td>
+</tr>
+<tr>
+<th>
+11
+</th>
+<td>
+s
+</td>
+<td>
+We received an error message while trying to update the firmware for our
+</td>
+</tr>
+<tr>
+<th>
+12
+</th>
+<td>
+s
+</td>
+<td>
+We understand that the server is not under warranty, but we just need to get the iDRAC license.
+</td>
+</tr>
+<tr>
+<th>
+13
+</th>
+<td>
+s
+</td>
+<td>
+Where can I find and download the latest version of SCOS for Dell Compellent SC4020
+</td>
+</tr>
+<tr>
+<th>
+14
+</th>
+<td>
+h
+</td>
+<td>
+2 HDD Failure and Server not Booting up
+</td>
+</tr>
+<tr>
+<th>
+15
+</th>
+<td>
+h
+</td>
+<td>
+A block on Physical Disk 0:0:0 was punctured by the controller. A block on Physical Disk 0:0:1 was punctured by the controller. Physical Disk 0:0:3 was reset.Communication with Chassis Integrated Controller 1 has been lost.
+</td>
+</tr>
+<tr>
+<th>
+16
+</th>
+<td>
+s
+</td>
+<td>
+A Dell software utility called lifecycle controoler from within windows has made the system unable to boot - It may be missing its dell service profile if that makes sense. The files and folder of the system are still intact and on the SSDisk.
+</td>
+</tr>
+<tr>
+<th>
+17
+</th>
+<td>
+h
+</td>
+<td>
+A fatal error was detected on a component at bus 23 device 2 function 0. The NDC is absent.
+</td>
+</tr>
+<tr>
+<th>
+18
+</th>
+<td>
+s
+</td>
+<td>
+A fibre channel adapter attached to this host started reporting errors, causing high latency and preventing access to VMs hosted on this system. Errors reported by our fibre channel adapter is the cause of the errors or not. Please advise which resources we can send you (e. g. logs) to help with the diagnosis.
+</td>
+</tr>
+<tr>
+<th>
+19
+</th>
+<td>
+h
+</td>
+<td>
+A system board fan keep reporting “less than the lower critical threshold” and then going into “Fan redundancy is lost”. It will then come back on line and all green. It has done this multiple times over the weekend. I have attached the log file.
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+<hr>
+<p>Now that we have a clearer idea about the dataset, let’s move on to the process of creating a TextDataLoader, which is a crucial step in preparing our data for training the model. Shall we?</p>
+</section>
+<section id="textdataloader-prepping-the-data" class="level3">
+<h3 class="anchored" data-anchor-id="textdataloader-prepping-the-data"><strong>TextDataLoader: Prepping the Data</strong></h3>
+<p>After acquainting ourselves with the dataset, the next pivotal step involves preparing this data for the deep learning model. The Fastai library offers an incredibly handy tool for this – the <code>TextDataLoader</code>.</p>
+<p>So, what does the <code>TextDataLoader</code> do?</p>
+<p>Simply put, it loads our dataset, identifies our label and text columns, and performs transformative operations on our email samples, which includes tokenization and numericalization.</p>
+<p>Here’s how we employ <code>TextDataLoader</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> TextDataLoaders.from_csv(path<span class="op">=</span>path, csv_fname<span class="op">=</span><span class="st">'Dataset_CSV.csv'</span>, text_col<span class="op">=</span><span class="st">'text'</span>, label_col<span class="op">=</span><span class="st">'label'</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dls.show_batch(max_n<span class="op">=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>When you execute the above code, you’ll witness the Fastai library automatically processing the texts, tokenizing them, and adding some special tokens. Here are a couple of examples:</p>
+<ul>
+<li><code>xxbos</code>: Indicates the beginning of a text.</li>
+<li><code>xxmaj</code>: Denotes that the subsequent word was initially capitalized.</li>
+</ul>
+<p>With our data neatly formatted and ready, the subsequent move is defining a <code>Learner</code> apt for text classification.</p>
+<hr>
+<p>Let’s proceed and understand how we can create a learner tailored for our text classification task.</p>
+</section>
+<section id="the-first-attempt-at-classification" class="level3">
+<h3 class="anchored" data-anchor-id="the-first-attempt-at-classification"><strong>The First Attempt at Classification</strong></h3>
+<p>With our data primed, it’s time to forge ahead and train our first classifier. In this endeavor, we’re leveraging the <code>text_classifier_learner</code> method provided by Fastai. This method is tailored for training text classification models.</p>
+<p>Here’s the code snippet that sets up our learner:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> text_classifier_learner(dls, AWD_LSTM, drop_mult<span class="op">=</span><span class="fl">0.5</span>, metrics<span class="op">=</span>accuracy)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A few points to elucidate:</p>
+<ul>
+<li><code>dls</code>: This is our data loaded via the <code>TextDataLoader</code>.</li>
+<li><code>AWD_LSTM</code>: The architecture we’re utilizing. AWD_LSTM is a type of recurrent neural network known for its prowess in natural language processing tasks.</li>
+<li><code>drop_mult=0.5</code>: A multiplier applied to all dropouts in the AWD_LSTM model to regularize the model and prevent overfitting.</li>
+<li><code>metrics=accuracy</code>: We’re gauging the performance of our model based on its accuracy.</li>
+</ul>
+<p>Now that our learner is set up, we can train it and evaluate its performance. But this is merely the beginning. As we delve deeper into this notebook, we’ll explore more advanced techniques and iterations to refine our model.</p>
+<hr>
+<p>Let’s continue this exploration and uncover the subsequent steps taken in the notebook. Shall we?</p>
+</section>
+<section id="fine-tuning-and-initial-evaluation" class="level3">
+<h3 class="anchored" data-anchor-id="fine-tuning-and-initial-evaluation"><strong>Fine-Tuning and Initial Evaluation</strong></h3>
+<p>Building upon our foundational learner, we implement the power of fine-tuning to enhance its performance. Fine-tuning is a strategy wherein a pre-trained model is further trained (typically with a smaller learning rate) on a new dataset. This approach is incredibly beneficial, especially when the new dataset is relatively small.</p>
+<p>Here’s how we proceed with fine-tuning:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>learn.fine_tune(<span class="dv">4</span>, <span class="fl">1e-2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The number ‘4’ represents the epochs, indicating that we train our model for four iterations. The <code>1e-2</code> is our learning rate, determining the step size taken during optimization.</p>
+<p>Post fine-tuning, it’s essential to evaluate our model. One intuitive way to do this is by visualizing the results:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>learn.show_results()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For a more quantitative perspective, we could also analyze the confusion matrix, which provides insights into false positives, false negatives, true positives, and true negatives.</p>
+</section>
+<section id="testing-on-unseen-data" class="level3">
+<h3 class="anchored" data-anchor-id="testing-on-unseen-data">Testing on Unseen Data</h3>
+<p>A trained model’s real mettle is tested when it encounters unseen data. Let’s see how our model fares:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>learn.predict(<span class="st">"please help me update my server software"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Additionally, we test a more intricate sentence:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>learn.predict(<span class="st">"I am having issues after software update, I believe it is a hardware issue and need a DIMM replaced"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Interestingly, our model, in the second instance, places a strong emphasis on the keyword ‘software’, misclassifying the issue with a whopping 96% confidence. This highlights the nuances and challenges in natural language processing and underscores the need for continuous refinement.</p>
+<hr>
+<p>As we journey further into this notebook, we’ll uncover more advanced strategies to enhance our model. Stay tuned!</p>
+</section>
+<section id="diving-deeper-fine-tuning-a-language-model" class="level3">
+<h3 class="anchored" data-anchor-id="diving-deeper-fine-tuning-a-language-model"><strong>Diving Deeper: Fine-Tuning a Language Model</strong></h3>
+<p>While our initial classifier provided some insights, the world of natural language processing is filled with nuances. To tackle these complexities, one strategy is to train a language model specific to the domain or context in question. In our case, this means a language model tailored to Dell’s vocabulary.</p>
+<p>Before embarking on this, let’s test our model on another sentence to gauge its current performance:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>learn.predict(<span class="st">"please help this is not a software issue this is a hardware problem"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="crafting-the-language-model" class="level4">
+<h4 class="anchored" data-anchor-id="crafting-the-language-model"><strong>Crafting the Language Model</strong></h4>
+<p>To further refine our model, we harness the power of Fastai’s DataBlock API, which provides a flexible and intuitive way to structure our data:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> TextDataLoaders.from_csv(path<span class="op">=</span>path, csv_fname<span class="op">=</span><span class="st">'Dataset_CSV.csv'</span>, text_col<span class="op">=</span><span class="st">'text'</span>, label_col<span class="op">=</span><span class="st">'label'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The parameter <code>valid_pct=0.1</code> implies that a random 10% of the reviews will form the validation set. To get a sense of how the data looks after loading, you can execute:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>dell_lm.show_batch(max_n<span class="op">=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For our language model, we stick to the tried and tested AWD_LSTM architecture. Our metrics of choice are accuracy and perplexity (the latter being the exponential of the loss). We also incorporate weight decay and mixed precision for optimization and faster training:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> language_model_learner(dell_lm, AWD_LSTM, metrics<span class="op">=</span>[accuracy, Perplexity()], path<span class="op">=</span>path, wd<span class="op">=</span><span class="fl">0.1</span>).to_fp16()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="embracing-the-power-of-freezing" class="level4">
+<h4 class="anchored" data-anchor-id="embracing-the-power-of-freezing"><strong>Embracing the Power of Freezing</strong></h4>
+<p>One technique that’s invaluable during training is “freezing”. This involves fixing the weights of certain layers (typically the earlier ones) while training the others. This can be especially useful when fine-tuning pre-trained models:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">1</span>, <span class="fl">1e-2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>By iteratively freezing and unfreezing layers, we can achieve a delicate balance, preserving the knowledge gained by the pre-trained model while customizing it to our specific task.</p>
+<hr>
+<p>The exciting journey of refining our model continues. Let’s delve further into the notebook’s subsequent steps.</p>
+</section>
+</section>
+<section id="saving-your-training-epochs" class="level3">
+<h3 class="anchored" data-anchor-id="saving-your-training-epochs"><strong>Saving Your Training Epochs</strong></h3>
+<p>In deep learning, especially when working with vast datasets and models, training can be a time-consuming process. So, it’s essential to save our progress. Imagine training a model for several hours, only to lose all that effort due to a sudden crash or interruption!</p>
+<p>To save an epoch after training, use:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>learn.save(<span class="st">'1epoch'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This command creates a file in <code>learn.path/models/</code> named “1epoch.pth”. If you wish to resume training later or load your model on another machine, use:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> learn.load(<span class="st">'1epoch'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>And voilà! Your model’s state is back.</p>
+</section>
+<section id="unfreezing-fine-tuning-your-model" class="level3">
+<h3 class="anchored" data-anchor-id="unfreezing-fine-tuning-your-model"><strong>Unfreezing: Fine-tuning Your Model</strong></h3>
+<p>Once you’ve trained your model with the frozen layers, it’s time to “unfreeze” them. This allows you to fine-tune the entire model for better performance.</p>
+<p>After unfreezing, you might notice remarkable improvements in your model’s accuracy:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>learn.unfreeze()</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">15</span>, <span class="fl">1e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="text-generation-let-your-model-speak" class="level3">
+<h3 class="anchored" data-anchor-id="text-generation-let-your-model-speak"><strong>Text Generation: Let Your Model Speak</strong></h3>
+<p>What’s the fun of a language model if it can’t generate text? Let’s play a bit:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>TEXT <span class="op">=</span> <span class="st">"Hi, I need help with"</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>N_WORDS <span class="op">=</span> <span class="dv">40</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>N_SENTENCES <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> [learn.predict(TEXT, N_WORDS, temperature<span class="op">=</span><span class="fl">0.75</span>) <span class="cf">for</span> _ <span class="kw">in</span> <span class="bu">range</span>(N_SENTENCES)]</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(preds))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The results? Randomly generated customer emails that might look eerily similar to real ones. This shows how our model has learned the language structure from the training data.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>.join(preds))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<pre><code>Hi , i need help with the support &amp; support support to restore idrac Enterprise software to the idrac and the OS version in the process . Nutanix ME4024 has failed in Firmware . The firmware version on screen
+Hi , i need help with the server Hi , i tried to update Firmware , but the issue followed the original firmware . But it 's not responding , I have tried to install Firmware , but i am</code></pre>
+</section>
+<section id="gradual-unfreezing-one-layer-at-a-time" class="level3">
+<h3 class="anchored" data-anchor-id="gradual-unfreezing-one-layer-at-a-time"><strong>Gradual Unfreezing: One Layer at a Time</strong></h3>
+<p>One of the secrets of fine-tuning a model effectively is the concept of “gradual unfreezing”. Instead of unfreezing all layers at once, we do it one by one, from the last layer to the first. This approach helps in achieving better results without compromising the earlier layers’ knowledge:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Unfreeze the last two layers and train</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>learn.freeze_to(<span class="op">-</span><span class="dv">2</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">1</span>, <span class="bu">slice</span>(<span class="fl">1e-2</span><span class="op">/</span>(<span class="fl">2.6</span><span class="op">**</span><span class="dv">4</span>),<span class="fl">1e-2</span>))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Progressively unfreeze more layers and train</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>learn.freeze_to(<span class="op">-</span><span class="dv">3</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">1</span>, <span class="bu">slice</span>(<span class="fl">5e-3</span><span class="op">/</span>(<span class="fl">2.6</span><span class="op">**</span><span class="dv">4</span>),<span class="fl">5e-3</span>))</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Finally, unfreeze the entire model and train</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>learn.unfreeze()</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">2</span>, <span class="bu">slice</span>(<span class="fl">1e-3</span><span class="op">/</span>(<span class="fl">2.6</span><span class="op">**</span><span class="dv">4</span>),<span class="fl">1e-3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="wrapping-up-with-a-confusion-matrix" class="level3">
+<h3 class="anchored" data-anchor-id="wrapping-up-with-a-confusion-matrix"><strong>Wrapping Up with a Confusion Matrix</strong></h3>
+<p>A confusion matrix provides a snapshot of how well your model is performing in terms of true positives, true negatives, false positives, and false negatives. It’s an invaluable tool for understanding your model’s strengths and weaknesses:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>interp <span class="op">=</span> ClassificationInterpretation.from_learner(learn)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"After Fine Tune Language Model"</span>)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>interp.plot_confusion_matrix()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Dell_LSTM_Blog_files/figure-html/85178396-fc9e-4ac1-a940-3967242f0d7b-1-5459381b-187b-436e-ad98-7811492f686d.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h3>
+<p>In this journey, we took a dataset of Dell technical support emails and, using deep learning, classified them into ‘hardware’ and ‘software’ categories. With the power of pretrained models, tokenization, and gradual unfreezing, we achieved impressive results.</p>
+<p>Unfortantly I can’t share this specific dataset, but the full code is <a href="https://github.com/c123ian/Dell_Language_Model_Project">here</a> on my GitHub.</p>
+<p>Remember, deep learning is as much an art as it is a science. Keep experimenting, fine-tuning, and most importantly, have fun!</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

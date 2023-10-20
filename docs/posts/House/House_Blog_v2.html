@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>c123ian.github.io - Dublin’s Property Prices: A Spatial Perspective 🏠</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">c123ian.github.io</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Dublin’s Property Prices: A Spatial Perspective 🏠</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p><em>By Cian Prendergast</em></p>
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction"><strong>Introduction</strong></h3>
+<p>Much like its European counterparts, Dublin is experiencing a surge in house prices. My initial vision, sparked by <a href="https://www.shanelynn.ie/the-irish-property-price-register-geocoded-to-small-areas/">Shane Lynn’s captivating geocoded visualization of Irish property prices</a>, was ambitious. While that precise visualization hasn’t yet materialized, I’ve embarked on an exploration to generate longitude and latitude data from Irish addresses. Notably, these addresses don’t include our newly minted Eircodes (akin to zip codes). A word of caution for the enthusiastic data enthusiast: tread carefully with APIs. A slip in my Google API usage nearly landed me with a €300 bill—thankfully, Google showed mercy!</p>
+</section>
+<section id="data-acquisition" class="level3">
+<h3 class="anchored" data-anchor-id="data-acquisition"><strong>Data Acquisition</strong></h3>
+<p>Original dataset collected via <a href="https://www.propertypriceregister.ie/">Residential Property Price Register</a></p>
+<p>While this project used a subset dataset of 51,834 entries, covering Property Price Register from 2018, see <a href="https://huggingface.co/datasets/c123ian/Dublin_House_Prices_2010_2022">here</a> 📊 to download all of Dublin prices from 2010 - 2022 from HuggingFace Hub. The <a href="https://www.propertypriceregister.ie/">Residential Property Price Register</a> authority acknowledges that there may be errors in the data in the Register. The Register is compiled from data which is filed, for stamp duty purposes, with the Revenue Commissioners. The data is primarily filed electronically by persons doing the conveyancing of the property on behalf of the purchaser and errors may occur when the data is being filed.</p>
+<p>Libraries that will be using:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> scipy.stats <span class="im">as</span> stats</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sklearn.linear_model <span class="im">as</span> linear_model</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> xgboost <span class="im">as</span> xgb</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="initial-observations" class="level3">
+<h3 class="anchored" data-anchor-id="initial-observations"><strong>Initial Observations</strong></h3>
+<p>Upon loading our dataset, we made a few noteworthy observations: - The dataset contains a total of 98,952 entries. - Out of these, 68,224 entries lack a postal code. - This means only 30,728 entries (or roughly 31%) include postal codes.</p>
+<p>This data point is significant as postal codes can provide a granular view of property prices, allowing for more localized analyses.</p>
+</section>
+<section id="data-exploration" class="level3">
+<h3 class="anchored" data-anchor-id="data-exploration"><strong>Data Exploration</strong></h3>
+<p>Our dataset, stored in the file <code>DHP.csv</code>, is obtained from a shared Google Drive link. The data is then loaded into a Pandas DataFrame, a powerful tool for data analysis in Python.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">'https://docs.google.com/uc?export=download&amp;id=18ihnF-19iEhv9-vEfSz9-EmCfPqAnPQl'</span>, encoding<span class="op">=</span> <span class="st">'unicode_escape'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Let’s take a quick glance at the first few rows of our dataset:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+Date of Sale
+</th>
+<th>
+Address
+</th>
+<th>
+Postal Code
+</th>
+<th>
+County
+</th>
+<th>
+Price
+</th>
+<th>
+Not Full Market Price
+</th>
+<th>
+VAT Exclusive
+</th>
+<th>
+Description of Property
+</th>
+<th>
+Property Size Description
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+0
+</th>
+<td>
+02/09/2016
+</td>
+<td>
+114 Diswellstown Manor, Castleknock, Dublin 15
+</td>
+<td>
+Dublin 15
+</td>
+<td>
+Dublin
+</td>
+<td>
+541850.22
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+New Dwelling house /Apartment
+</td>
+<td>
+greater than 125 sq metres
+</td>
+</tr>
+<tr>
+<th>
+1
+</th>
+<td>
+02/09/2016
+</td>
+<td>
+9 Dooroge Woods, Ballyboughal, Swords
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+189427.31
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+New Dwelling house /Apartment
+</td>
+<td>
+greater than 125 sq metres
+</td>
+</tr>
+<tr>
+<th>
+2
+</th>
+<td>
+26/08/2016
+</td>
+<td>
+11 THE DRIVE, MILLERS GLEN, SWORDS
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+242246.00
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+New Dwelling house /Apartment
+</td>
+<td>
+greater than 125 sq metres
+</td>
+</tr>
+<tr>
+<th>
+3
+</th>
+<td>
+26/08/2016
+</td>
+<td>
+57 Wellington Road, Templeogue
+</td>
+<td>
+Dublin 6w
+</td>
+<td>
+Dublin
+</td>
+<td>
+565000.00
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+New Dwelling house /Apartment
+</td>
+<td>
+greater than 125 sq metres
+</td>
+</tr>
+<tr>
+<th>
+4
+</th>
+<td>
+25/08/2016
+</td>
+<td>
+1 Hollywoodrath Avenue, Hollystown, Dublin 15
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+290748.90
+</td>
+<td>
+No
+</td>
+<td>
+Yes
+</td>
+<td>
+New Dwelling house /Apartment
+</td>
+<td>
+greater than 125 sq metres
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+<p>One of the first preprocessing steps we undertook was converting the ‘Date of Sale’ column to a datetime format, enabling time-based analyses. Additionally, we renamed certain columns for ease of access:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Date of Sale'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Date of Sale'</span>], dayfirst<span class="op">=</span><span class="va">True</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'</span><span class="sc">%d</span><span class="st">/%m/%Y'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">'Price (€)'</span>: <span class="st">'Price'</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="data-cleaning" class="level3">
+<h3 class="anchored" data-anchor-id="data-cleaning"><strong>Data Cleaning</strong></h3>
+<p>Before any advanced analysis, it’s paramount to ensure our dataset is clean and consistent. Data cleaning involves handling missing values, correcting anomalies, and structuring the data in a way that’s conducive to analysis.</p>
+<p>One of the first cleaning steps is to filter out entries that were not sold at the full market price and focus on properties that are either second-hand or new dwelling houses/apartments:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">'Not Full Market Price'</span>] <span class="op">==</span> <span class="st">'No'</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(<span class="st">'Not Full Market Price'</span>, axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[(df[<span class="st">'Description of Property'</span>] <span class="op">==</span> <span class="st">'Second-Hand Dwelling house /Apartment'</span>) <span class="op">|</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        (df[<span class="st">'Description of Property'</span>] <span class="op">==</span> <span class="st">'New Dwelling house /Apartment'</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="longitude-and-latitude-generation" class="level3">
+<h3 class="anchored" data-anchor-id="longitude-and-latitude-generation"><strong>Longitude and Latitude Generation</strong></h3>
+<p>Before generating or refining spatial data, we prepared the dataset by creating empty columns for longitude (<code>long</code>) and latitude (<code>lat</code>). These columns will store the spatial coordinates for each property:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'long'</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'lat'</span>] <span class="op">=</span> <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Before leveraging any geocoding service, it’s essential to ensure that the columns intended to store the spatial data are of the appropriate data type. Here, we ensured that the latitude (<code>lat</code>) and longitude (<code>long</code>) columns could store floating-point numbers, allowing for the precision necessary in spatial coordinates:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"lat"</span>] <span class="op">=</span> pd.to_numeric(df[<span class="st">"lat"</span>], downcast<span class="op">=</span><span class="st">"float"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"long"</span>] <span class="op">=</span> pd.to_numeric(df[<span class="st">"long"</span>], downcast<span class="op">=</span><span class="st">"float"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="enhancing-address-accuracy" class="level3">
+<h3 class="anchored" data-anchor-id="enhancing-address-accuracy"><strong>Enhancing Address Accuracy</strong></h3>
+<p>Accuracy is paramount when geocoding addresses. A slight variation or omission in an address can lead to a significantly different set of spatial coordinates. For instance, only 30,728 entries (or roughly 31%) include postal codes. To enhance the accuracy of our geocoding, we appended “, Dublin” to each address in our dataset. This ensures that the geocoding service understands the context and provides coordinates specific to Dublin:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Address'</span>] <span class="op">=</span> df[<span class="st">'Address'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="st">"</span><span class="sc">{}{}</span><span class="st">"</span>.<span class="bu">format</span>(x, <span class="st">' , Dublin'</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="geocoding-with-the-google-api" class="level2">
+<h2 class="anchored" data-anchor-id="geocoding-with-the-google-api"><strong>Geocoding with the Google API</strong></h2>
+<p>With our dataset ready, we proceeded with geocoding each address using the <a href="https://developers.google.com/maps/documentation/geocoding/overview">Google Maps API</a>.</p>
+<p>First, we set up the Google Maps client:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> googlemaps</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>gmaps <span class="op">=</span> googlemaps.Client(key<span class="op">=</span><span class="st">'xxxxxx'</span>)  <span class="co"># Note: actual API key is masked for security reasons.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Then, for each address in our dataset, we sent a request to the Google Maps Geocoding API:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df)):</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>        geocode_result <span class="op">=</span> gmaps.geocode(df[<span class="st">'Address'</span>][x])</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'lat'</span>][x] <span class="op">=</span> geocode_result[<span class="dv">0</span>][<span class="st">'geometry'</span>][<span class="st">'location'</span>][<span class="st">'lat'</span>]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">'long'</span>][x] <span class="op">=</span> geocode_result[<span class="dv">0</span>][<span class="st">'geometry'</span>][<span class="st">'location'</span>][<span class="st">'lng'</span>]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">IndexError</span>:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Address was wrong..."</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Unexpected error occurred."</span>, e)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>After the geocoding process, we saved the updated dataset with spatial coordinates:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'output.csv'</span>, encoding<span class="op">=</span><span class="st">'unicode_escape'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+Date of Sale
+</th>
+<th>
+Address
+</th>
+<th>
+Postal Code
+</th>
+<th>
+County
+</th>
+<th>
+Price
+</th>
+<th>
+VAT Exclusive
+</th>
+<th>
+Description of Property
+</th>
+<th>
+Property Size Description
+</th>
+<th>
+long
+</th>
+<th>
+lat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+55590
+</th>
+<td>
+21/01/2010
+</td>
+<td>
+7 Hawthorn Terrace, Eastwall, Dublin , Dublin
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+210,000.0
+</td>
+<td>
+No
+</td>
+<td>
+Second-Hand Dwelling house /Apartment
+</td>
+<td>
+NaN
+</td>
+<td>
+-6.2375688552856445
+</td>
+<td>
+53.35382843017578
+</td>
+</tr>
+<tr>
+<th>
+55591
+</th>
+<td>
+21/01/2010
+</td>
+<td>
+76 Royston, Kimmage Road West, Dublin 12 , Dublin
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+297,500.0
+</td>
+<td>
+No
+</td>
+<td>
+Second-Hand Dwelling house /Apartment
+</td>
+<td>
+NaN
+</td>
+<td>
+-6.312779426574707
+</td>
+<td>
+53.315460205078125
+</td>
+</tr>
+<tr>
+<th>
+55592
+</th>
+<td>
+21/01/2010
+</td>
+<td>
+9 Woodstown Gardens, Ballycullen Road, Knockly…
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+409,000.0
+</td>
+<td>
+No
+</td>
+<td>
+Second-Hand Dwelling house /Apartment
+</td>
+<td>
+NaN
+</td>
+<td>
+-6.325483798980713
+</td>
+<td>
+53.275978088378906
+</td>
+</tr>
+<tr>
+<th>
+55593
+</th>
+<td>
+21/01/2010
+</td>
+<td>
+94, Loreto Avenue, Rathfarnham , Dublin
+</td>
+<td>
+Dublin 14
+</td>
+<td>
+Dublin
+</td>
+<td>
+271,000.0
+</td>
+<td>
+No
+</td>
+<td>
+Second-Hand Dwelling house /Apartment
+</td>
+<td>
+NaN
+</td>
+<td>
+-6.274948596954346
+</td>
+<td>
+53.28966522216797
+</td>
+</tr>
+<tr>
+<th>
+55594
+</th>
+<td>
+21/01/2010
+</td>
+<td>
+Apt. 49 Hunters Walk, Hunterswood, Ballycullen…
+</td>
+<td>
+NaN
+</td>
+<td>
+Dublin
+</td>
+<td>
+225,000.0
+</td>
+<td>
+No
+</td>
+<td>
+Second-Hand Dwelling house /Apartment
+</td>
+<td>
+NaN
+</td>
+<td>
+-6.3307037353515625
+</td>
+<td>
+53.27122497558594
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+<section id="visualizing-the-spatial-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-spatial-distribution">Visualizing the Spatial Distribution</h3>
+<p>To visualize the spatial distribution of the properties in our newly generated dataset, we can plot their latitude and longitude values:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">10</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>sns.jointplot(x<span class="op">=</span>df.lat.values, y<span class="op">=</span>df.<span class="bu">long</span>.values, size<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Longitude'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Latitude'</span>, fontsize<span class="op">=</span><span class="dv">12</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This visualization offers a bird’s-eye view of the property distribution across Dublin. It can also help in identifying any outliers or anomalies in our geocoded data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="House_Blog_v2_files/figure-html/0f31ece4-bd04-47e2-b0bb-c5c675985f4b-1-192d707e-76ca-4a6b-b2b7-6b6fbc053c37.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<p>We can remove outliers <a href="https://stackoverflow.com/questions/67629499/data-cleaning-of-lat-long-coordinates">based on the percentiles</a>, repeat by generating the visulisation (we want our datapoints to be within the boundary/shape of Dublin.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df[[<span class="st">'long'</span>, <span class="st">'lat'</span>]].describe(percentiles<span class="op">=</span>[<span class="fl">.01</span>,<span class="fl">.05</span>,<span class="fl">.1</span>,<span class="fl">.25</span>,<span class="fl">.5</span>,<span class="fl">.9</span>,<span class="fl">.95</span>,<span class="fl">.99</span>]) <span class="co"># maybe dipslay by two decomal point</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div>
+
+
+<table class="dataframe table table-sm table-striped small">
+<thead>
+<tr>
+<th>
+</th>
+<th>
+long
+</th>
+<th>
+lat
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+count
+</th>
+<td>
+55526.00
+</td>
+<td>
+55526.00
+</td>
+</tr>
+<tr>
+<th>
+mean
+</th>
+<td>
+-6.29
+</td>
+<td>
+53.33
+</td>
+</tr>
+<tr>
+<th>
+std
+</th>
+<td>
+1.89
+</td>
+<td>
+0.67
+</td>
+</tr>
+<tr>
+<th>
+min
+</th>
+<td>
+-121.95
+</td>
+<td>
+-35.91
+</td>
+</tr>
+<tr>
+<th>
+1%
+</th>
+<td>
+-6.47
+</td>
+<td>
+53.24
+</td>
+</tr>
+<tr>
+<th>
+5%
+</th>
+<td>
+-6.44
+</td>
+<td>
+53.26
+</td>
+</tr>
+<tr>
+<th>
+10%
+</th>
+<td>
+-6.41
+</td>
+<td>
+53.28
+</td>
+</tr>
+<tr>
+<th>
+25%
+</th>
+<td>
+-6.32
+</td>
+<td>
+53.30
+</td>
+</tr>
+<tr>
+<th>
+50%
+</th>
+<td>
+-6.26
+</td>
+<td>
+53.34
+</td>
+</tr>
+<tr>
+<th>
+90%
+</th>
+<td>
+-6.15
+</td>
+<td>
+53.44
+</td>
+</tr>
+<tr>
+<th>
+95%
+</th>
+<td>
+-6.13
+</td>
+<td>
+53.49
+</td>
+</tr>
+<tr>
+<th>
+99%
+</th>
+<td>
+-6.10
+</td>
+<td>
+53.61
+</td>
+</tr>
+<tr>
+<th>
+max
+</th>
+<td>
+146.91
+</td>
+<td>
+56.44
+</td>
+</tr>
+</tbody>
+
+</table>
+</div>
+</section>
+<section id="basic-folium-map" class="level3">
+<h3 class="anchored" data-anchor-id="basic-folium-map"><strong>Basic Folium Map</strong></h3>
+<p>We <code>import folium</code> and use our dataset mean to help follium find Dublin.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>map1 <span class="op">=</span> folium.Map(</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># lat, long</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    location<span class="op">=</span>[<span class="fl">53.34</span>,<span class="op">-</span><span class="fl">6.27</span>],</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># use default OpenStreetMap title</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    zoom_start<span class="op">=</span><span class="dv">12</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>df.<span class="bu">apply</span>(<span class="kw">lambda</span> row:folium.Circle(location<span class="op">=</span>[row[<span class="st">"lat"</span>], row[<span class="st">"long"</span>]]).add_to(map1), axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>map1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Add some colour scale using <code>LinearColormap</code> class. It gives us the ability to assign a color to the Circle objects added to our map:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>center <span class="op">=</span> get_center_latlong(df3)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># create a LinearColorMap and assign colors, vmin, and vmax</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="co"># the colormap will show green for $100,000 homes all the way up to red for $1,500,000 homes</span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>colormap <span class="op">=</span> cm.LinearColormap(colors<span class="op">=</span>[<span class="st">'green'</span>, <span class="st">'yellow'</span>, <span class="st">'red'</span>], vmin<span class="op">=</span><span class="dv">230000</span>, vmax<span class="op">=</span><span class="dv">460000</span>) <span class="co"># price range 25% and 75% quartile for 2018 - 2020</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="co"># create our map again.  This time I am using a different tileset for a new look</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>m <span class="op">=</span> folium.Map(location<span class="op">=</span>center, zoom_start<span class="op">=</span><span class="dv">10</span>, tiles<span class="op">=</span><span class="st">'Stamen Toner'</span>)</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Same as before... go through each home in set, make circle, and add to map.</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This time we add a color using price and the colormap object</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df3)):</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    folium.Circle(</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>        location<span class="op">=</span>[df3.iloc[i][<span class="st">'lat'</span>], df3.iloc[i][<span class="st">'long'</span>]],</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>        radius<span class="op">=</span><span class="dv">10</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        fill<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        color<span class="op">=</span>colormap(df3.iloc[i][<span class="st">'Price'</span>]),<span class="co"># colour by price</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        fill_opacity<span class="op">=</span><span class="fl">0.2</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    ).add_to(m)</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="co"># the following line adds the scale directly to our map</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>m.add_child(colormap)</span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Save map </span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>m.save(<span class="st">'price_colormap.html'</span>)</span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>m <span class="co"># to display</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="House_Blog_v2_files/figure-html/0f31ece4-bd04-47e2-b0bb-c5c675985f4b-2-851c049b-1484-4c9c-88f2-f25be2be5c3d.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+</section>
+<section id="segmenting-the-map-into-parishes-using-geojson" class="level3">
+<h3 class="anchored" data-anchor-id="segmenting-the-map-into-parishes-using-geojson"><strong>Segmenting the Map into Parishes using GeoJSON</strong></h3>
+<p>Dublin is divided into numerous parishes. Segmenting our data by these parishes allows us to understand property prices at a more localized level. The segmentation process involves:</p>
+<ol type="1">
+<li><strong>Obtaining Parish Boundaries</strong>: This involves sourcing a map that clearly defines the boundaries of each parish.</li>
+<li><strong>Overlaying Property Data</strong>: Once we have the boundaries, we overlay our property data, ensuring each property is correctly located within its respective parish.</li>
+<li><strong>Aggregating Data</strong>: For each parish, we can now aggregate data, calculating metrics like average price, highest sale, and more.</li>
+</ol>
+<p>Dublin parish boundaries in GeoJSON format, originally pulled from the 2011 Census, see source <a href="https://github.com/ihuston/dublin_parishes">here</a>. GeoJSON is a data format tailored for encoding geographical structures, extending the simplicity of JSON to spatial data. It uses polygons to represent the enclosed parish areas.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dublin_map <span class="op">=</span> folium.Map(location<span class="op">=</span>[<span class="fl">53.3302</span>,  <span class="op">-</span><span class="fl">6.3106</span>],zoom_start<span class="op">=</span> <span class="dv">11</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> (<span class="st">"https://raw.githubusercontent.com/ihuston/dublin_parishes/master/data/cleaned_dublin_parishes.geojson"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>dublin_parishes_edge <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>url<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>f <span class="op">=</span> folium.Choropleth(</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    geo_data<span class="op">=</span> dublin_parishes_edge,</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> parish,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>[<span class="st">"parishes_name"</span>,<span class="st">"Price"</span>],</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    key_on<span class="op">=</span><span class="st">"feature.properties.Parish Name"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    name<span class="op">=</span><span class="st">"choropleth"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    bins <span class="op">=</span> <span class="dv">8</span>,</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    fill_color <span class="op">=</span> <span class="st">"BuPu"</span>,</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    fill_opacity<span class="op">=</span><span class="fl">0.7</span>,</span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>    line_opacity<span class="op">=</span><span class="fl">0.2</span>,</span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>    highlight<span class="op">=</span><span class="va">True</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>).add_to(dublin_map)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>f.geojson.add_child(</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>    folium.features.GeoJsonTooltip([<span class="st">'Parish Name'</span>],labels<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>dublin_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="House_Blog_v2_files/figure-html/0f31ece4-bd04-47e2-b0bb-c5c675985f4b-3-a6097993-c6b6-42ab-b049-105c686c0d25.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">image.png</figcaption>
+</figure>
+</div>
+<hr>
+</section>
+<section id="future-steps-deepening-the-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="future-steps-deepening-the-analysis"><strong>Future Steps: Deepening the Analysis</strong></h3>
+<p>With our geocoded data ready and refined, we can deepen our analysis. Potential directions include:</p>
+<ol type="1">
+<li><strong>Spatial Clustering</strong>: Grouping properties based on their spatial proximity can help identify hotspots or areas with similar price trends.</li>
+<li><strong>Time-based Analysis</strong>: Exploring how property prices have evolved over time, combined with the spatial data, can offer insights into emerging real estate trends in specific areas.</li>
+<li><strong>Incorporating External Data</strong>: Overlaying our property data with other datasets, like amenities, public transport routes, or school districts, can help identify factors influencing property prices.</li>
+</ol>
+</section>
+<section id="conclusion" class="level3">
+<h3 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h3>
+<p>Spatial analysis, especially when combined with segmentation like parishes, provides a depth of insight that’s hard to achieve otherwise. It allows stakeholders to make decisions based on localized trends rather than broad strokes. As we’ve showcased in this analysis, the value of such a project isn’t just in the data, but in the nuanced understanding it provides.</p>
+<p>local version <code>&lt;iframe src="file:///C:/Users/Cian/Documents/DCU/YEAR1/Data%20Mining%20CA683/price_colormap.html" width="100%" height="600"&gt;&lt;/iframe&gt;</code></p>
+<iframe src="file:///C:/Users/Cian/Documents/DCU/YEAR1/Data%20Mining%20CA683/price_colormap.html" width="100%" height="600">
+</iframe>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

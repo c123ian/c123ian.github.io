@@ -4,16 +4,16 @@ image: profile.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com
+    - icon: huggingface
+      text: HuggingFace
+      href: https://huggingface.co/c123ian
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/cianp/
     - icon: github
       text: Github
-      href: https://github.com
+      href: https://github.com/c123ian
 
 ---
 
-About this blog
+Hello my name is Cian Prendergast, I am from Dublin, Ireland and love to gather my own datasets for machine learning and AI exploration :)
