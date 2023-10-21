@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>c123ian.github.io - A Unified Approach to Web Scraping 🌐</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">c123ian.github.io</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">A Unified Approach to Web Scraping 🌐</h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="laying-the-groundwork" class="level4">
+<h4 class="anchored" data-anchor-id="laying-the-groundwork">1. <strong>Laying the Groundwork</strong>:</h4>
+<p>Every mission needs a clear objective. Khan Academy is a reservoir of educational content. Imagine its vast library as a series of interconnected textbooks. Each lesson is like a chapter, and our goal is to digitally ‘link’ these textbooks, extracting their essence for our data needs.</p>
+</section>
+<section id="reconnaissance---the-digital-marco-polo" class="level4">
+<h4 class="anchored" data-anchor-id="reconnaissance---the-digital-marco-polo">2. <strong>Reconnaissance - The Digital Marco Polo</strong>:</h4>
+<p>Much like the game of Marco Polo, where one player calls out “Marco!” and others respond with “Polo!”, web scraping is about sending a probe and waiting for a response. Using browser developer tools, we ‘call out’ to the website, inspecting elements and deciphering its structure. Often, elements like the ‘Load More’ button are hidden gems that we need to uncover for effective scraping.</p>
+<p>Here is a quick video showing the method in action:</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/WxKb9gDQt94" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="crafting-the-toolset" class="level4">
+<h4 class="anchored" data-anchor-id="crafting-the-toolset">3. <strong>Crafting the Toolset</strong>:</h4>
+<p>With insights from manual inspection, we turn to ChatGPT. By providing specific HTML elements, we get back Python functions, tailor-made for data extraction.</p>
+<p>Once we have the HMTL elements of interest copied: <img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-2-6dbe077b-6667-47af-80dd-39cad71946d8.png" class="img-fluid"></p>
+<p>We can feed them into ChatGPT:</p>
+<p>!<img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-4-8b0d1175-319c-408a-9091-01f5a13f6f5b.png" class="img-fluid"></p>
+</section>
+<section id="iterative-building---traversing-the-digital-tree" class="level4">
+<h4 class="anchored" data-anchor-id="iterative-building---traversing-the-digital-tree">4. <strong>Iterative Building - Traversing the Digital Tree</strong>:</h4>
+<p>Web scraping is akin to exploring a vast digital forest. Each website represents a unique tree within this forest, and the goal is to traverse from the leaves (finest details) to the root (landing or home page), gathering valuable data along the way.</p>
+<p>For an effective traversal:</p>
+<ol type="1">
+<li><p><strong>Start Small, Think Big</strong>: Begin by targeting a specific, granular detail on the website. This could be a single article, a forum post, or a lesson. By mastering the extraction process at this micro-level, you lay the groundwork for larger, more complex scraping tasks.</p>
+<p><em>Example from Khan Academy</em>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_lesson_details(url):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    driver.get(url)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> driver.find_element_by_xpath(<span class="st">'//div[@class="perseus-renderer"]'</span>).text</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-8-f5812532-65c9-4f58-9cf4-99b614f8954f.png" class="img-fluid" alt="/science/high-school-biology/hs-biology-foundations/hs-biology-and-the-scientific-method/a/what-is-life"></li>
+<li><p><strong>Branch Out</strong>: Once you’ve successfully extracted details from the ‘leaf’ level, start branching out. Explore related content within the same category or section. This could involve scraping all lessons within a particular topic or all posts within a forum thread.</p>
+<p><em>Example from Khan Academy</em>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_topic_details(url):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    driver.get(url)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    lesson_links <span class="op">=</span> driver.find_elements_by_xpath(<span class="st">'//a[@class="link_1uvuyao-o_O-nodeStyle_j7os3g-o_O-nodeStyleHighlight_aacz5b"]'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    topic_content <span class="op">=</span> [get_lesson_details(link.get_attribute(<span class="st">'href'</span>)) <span class="cf">for</span> link <span class="kw">in</span> lesson_links]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> topic_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-7-f3dae7a2-1ae3-4558-894c-dae836467651.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">/science/high-school-biology/hs-biology-foundations</figcaption>
+</figure>
+</div>
+<ol start="3" type="1">
+<li><p><strong>Connect the Dots</strong>: As you move further up the ‘tree’, look for patterns and connections. Understand how different sections or categories are linked. This interconnectedness will guide your scraping journey, ensuring you capture a holistic snapshot of the website’s content.</p>
+<p><em>Example from Dell IT Support</em>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_thread_details(url):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    driver.get(url)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    post_links <span class="op">=</span> driver.find_elements_by_xpath(<span class="st">'//div[@class="lia-thread-topic"]//a[@class="page-link lia-link-navigation lia-custom-event"]'</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    thread_content <span class="op">=</span> [extract_post_text(link.get_attribute(<span class="st">'href'</span>)) <span class="cf">for</span> link <span class="kw">in</span> post_links]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> thread_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+<li><p><strong>Reach the Root</strong>: With detailed insights from the branches and leaves, navigate back to the landing or home page. This final step should encapsulate all the data extraction methods you’ve developed, offering a comprehensive view of the website’s content.</p>
+<p><em>Example from Khan Academy</em>:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> navigate_to_khan_landing(url):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    driver.get(url)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    topic_links <span class="op">=</span> driver.find_elements_by_xpath(<span class="st">'//a[@class="link_1uvuyao-o_O-nodeStyle_j7os3g-o_O-nodeStyleHighlight_aacz5b"]'</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    landing_content <span class="op">=</span> [get_topic_details(link.get_attribute(<span class="st">'href'</span>)) <span class="cf">for</span> link <span class="kw">in</span> topic_links]</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> landing_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div></li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-3-796fe4c1-4754-4264-8b91-eee10bc75762.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">/science</figcaption>
+</figure>
+</div>
+<ol start="5" type="1">
+<li><strong>Iterate and Refine</strong>: Web scraping is rarely a one-shot process. As you traverse the digital tree, you’ll likely encounter challenges or discover more efficient paths. Continuously iterate on your methods, refining and optimizing as you delve deeper into the forest.</li>
+</ol>
+<hr>
+<p>By adopting an iterative building approach, you ensure thoroughness and efficiency in your web scraping endeavors. It’s about mastering the micro to effectively navigate the macro. Each step, each function, is a stepping stone, guiding you through the vast digital terrain.</p>
+</section>
+<section id="harvest-refine-and-polish" class="level4">
+<h4 class="anchored" data-anchor-id="harvest-refine-and-polish">5. <strong>Harvest, Refine, and Polish</strong>:</h4>
+<p>Post extraction, data needs cleansing. This includes handling placeholders like <code>[URL]</code>, removing Personal Identifiable Information (PII) such as names (often found adjacent to “@” symbols), and dealing with missing values.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data cleaning code</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clean_data(data_list):</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    cleaned_data <span class="op">=</span> []</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> data <span class="kw">in</span> data_list:</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Remove URL placeholders</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> data.replace(<span class="st">'[URL]'</span>, <span class="st">''</span>)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Remove PII (names associated with '@')</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">'@'</span> <span class="kw">in</span> data:</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Remove NaN or empty entries</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> data:</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>            <span class="cf">continue</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        cleaned_data.append(data)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> cleaned_data</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Assuming 'raw_data' is the list of extracted data</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>cleaned_data <span class="op">=</span> clean_data(raw_data)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the cleaned data into a CSV format</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(cleaned_data)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>df.to_csv(<span class="st">'cleaned_data.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="challenges---the-twists-and-turns-of-web-scraping" class="level3">
+<h3 class="anchored" data-anchor-id="challenges---the-twists-and-turns-of-web-scraping">6. Challenges - The Twists and Turns of Web Scraping:</h3>
+<p>Navigating the digital realm in pursuit of data treasures is not without its share of challenges. These hurdles test the resilience of your scraper, and by extension, your problem-solving mettle. Here are some of the challenges we encountered and the lessons they taught:</p>
+<section id="ever-changing-web-landscapes" class="level4">
+<h4 class="anchored" data-anchor-id="ever-changing-web-landscapes">1. <strong>Ever-Changing Web Landscapes</strong>:</h4>
+<p>Websites evolve. Whether it’s a design overhaul or a restructuring of content, these changes can render a previously efficient scraper ineffective. A prime example from our journey was with the Dell IT Support site. When I last scraped the site, all forum posts, including the “solved” ones, were housed together. Fast forward to now, and the “solved posts” have been segregated into their own section. A scraper tailored for the earlier structure would be obsolete today. Such changes emphasize the importance of regular scraper maintenance and adaptability.</p>
+<p><a href="https://c123ian.github.io/posts/SQuAD/squad.html">Check out this earlier scraping approach which is now obsolete due to site changes.</a></p>
+</section>
+<section id="the-wild-card-of-user-generated-content" class="level4">
+<h4 class="anchored" data-anchor-id="the-wild-card-of-user-generated-content">2. <strong>The Wild Card of User-Generated Content</strong>:</h4>
+<p>When dealing with platforms that allow user contributions, you’re diving into unpredictable waters. Without stringent formatting rules, users might introduce content that throws a wrench in your scraping logic. From embedding multimedia to using a whirlwind of emojis and special characters, user-generated content is a wild card. During our scraping mission, one such unexpected content format almost derailed a nearly complete scraping method!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-1-0fda119b-0f6f-458b-9e40-e9b8d83662aa.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Example, users marks question as solved answer</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-6-b9ccabd5-757a-4c9a-95ba-4ef600483464.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Example 2, having two solved posts</figcaption>
+</figure>
+</div>
+</section>
+<section id="the-delicate-art-of-data-cleaning" class="level4">
+<h4 class="anchored" data-anchor-id="the-delicate-art-of-data-cleaning">3. <strong>The Delicate Art of Data Cleaning</strong>:</h4>
+<p>Post extraction, the challenge shifts to refining this raw harvest. Decisions made during this phase profoundly impact the usability and quality of the data. For instance, URLs in the content: Are they useful metadata, or do they risk confusing a machine learning model? And what about images? Should they be omitted entirely or replaced with a placeholder like <code>[IMAGE]</code>?</p>
+<p>Name extraction poses its own set of challenges. Using the “@” character as a heuristic to remove names is handy but not exhaustive. Turning to a list of real names for cleaning is tempting but fraught with pitfalls. Common words that double as names, like “Will”, might get erroneously removed, distorting the data’s meaning.</p>
+<hr>
+</section>
+</section>
+<section id="wrapping-up" class="level3">
+<h3 class="anchored" data-anchor-id="wrapping-up">Wrapping Up:</h3>
+<p>In web scraping, it’s often wise to cast a wide net. For instance, even though the community Q&amp;A on Khan Academy wasn’t the primary focus, we extracted it—because, why not? Always gather more data than you think you’ll need.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="blog_v2_files/figure-html/7c36598c-c153-4efb-bf86-ad437150c365-5-ac863225-0f17-4921-b152-5fe285280baf.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">khan academy comments section</figcaption>
+</figure>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> extract_community_qa(url):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Extract community Q&amp;A content from a given Khan Academy page.</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - url (str): The URL of the Khan Academy page with community Q&amp;A.</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">    </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - list[dict]: A list of dictionaries, where each dictionary contains a question and its answer(s).</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    driver.get(url)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find all question elements on the page. The specific XPath would depend on the actual structure.</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    question_elements <span class="op">=</span> driver.find_elements_by_xpath(<span class="st">'//div[@class="qa-question"]'</span>)  <span class="co"># Placeholder XPath</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Initialize a list to store Q&amp;A pairs.</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    qa_content <span class="op">=</span> []</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> q_elem <span class="kw">in</span> question_elements:</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract the text of the question.</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>        question_text <span class="op">=</span> q_elem.find_element_by_xpath(<span class="st">'.//div[@class="question-text"]'</span>).text  <span class="co"># Placeholder XPath</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Extract corresponding answer(s).</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>        answer_elements <span class="op">=</span> q_elem.find_elements_by_xpath(<span class="st">'.//div[@class="answer-text"]'</span>)  <span class="co"># Placeholder XPath</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>        answers <span class="op">=</span> [answer_elem.text <span class="cf">for</span> answer_elem <span class="kw">in</span> answer_elements]</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Append the Q&amp;A pair to our content list.</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>        qa_content.append({</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>            <span class="st">'question'</span>: question_text,</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>            <span class="st">'answers'</span>: answers</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> qa_content</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Having data reserves can be invaluable for unforeseen projects down the line. The digital realm is vast and filled with treasures; dive in, gather generously, and let your data trove be the cornerstone of future innovations.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
