@@ -2,12 +2,13 @@
   {
     "listing": "/index.html",
     "items": [
+      "/posts/a_Phi/Updated_Phi_blog.html",
+      "/posts/a_Web Scraping/blog_v2.html",
       "/posts/Bee/bee_blog_refined_v2.html",
       "/posts/Bird/Bird_Visualisation_ver_HeatMap.html",
       "/posts/House/House_Blog_v2.html",
       "/posts/SQuAD/squad.html",
-      "/posts/ULMFiT/Dell_LSTM_Blog.html",
-      "/posts/Web Scraping/blog_v2.html"
+      "/posts/ULMFiT/Dell_LSTM_Blog.html"
     ]
   }
 ]
