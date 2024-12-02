@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Aunt-ificial Intelligence: Learning from Life’s Dilemmas – c123ian.github.io</title>
+<title>Aunt-ificial Intelligence: Learning from Life’s Dilemmas ✍️ – c123ian.github.io</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -147,7 +147,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Aunt-ificial Intelligence: Learning from Life’s Dilemmas</h1>
+      <h1 class="title"><strong>Aunt-ificial Intelligence: Learning from Life’s Dilemmas</strong> ✍️</h1>
                       </div>
   </div>
     
@@ -173,7 +173,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>The <a href="https://www.sciencedirect.com/science/article/abs/pii/S016503272400661X">therapeutic effectiveness</a> of artificial intelligence-based chatbots led me to look at uisng agony aunts to inform a LLM chatbot on their answers!</p>
 <p>This article demonstrates how to create a production-grade LLM that uses RAG to retrieve relevant ‘Agony Aunt’ articles to inform LLM’s life/relationship advice. The aim is to show the relevant components so anyone can swap in their LLM, with or without RAG. Instead of using OpenAI API or Claude, this project allows swapping in/out any open source model (e.g., LLAMA 3.2). This project merges <a href="https://github.com/arihanv/fasthtml-modal">this template</a> and Modal Labs <a href="https://modal.com/docs/examples/vllm_inference">OpenAI-compatible LLM inference with LLaMA 3.1-8B and vLLM turtorial</a> which also links to full code <a href="https://github.com/modal-labs/modal-examples/blob/main/06_gpu_and_ml/llm-serving/vllm_inference.py">here</a>.</p>
-<p>You can see the full code <a href="https://github.com/arihanv/fasthtml-modal">here</a> and the dataset used for RAG <a href="https://huggingface.co/datasets/c123ian/dear_deidre_agony_aunt">here</a>.</p>
+<p>You can download the full code <a href="https://github.com/c123ian/Agony_Aunt_RAG">here</a>🔗 and the dataset used for RAG <a href="https://huggingface.co/datasets/c123ian/dear_deidre_agony_aunt">here</a>📊.</p>
+<p>You can also interact with my own deployment <a href="https://c123ian--rag-chatbot-serve-fasthtml.modal.run">here</a>💬.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="./images/vid_modal.gif" class="img-fluid figure-img" style="width:80.0%"></p>
@@ -201,7 +202,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="data-collection-and-context" class="level2">
 <h2 class="anchored" data-anchor-id="data-collection-and-context">Data Collection and Context</h2>
 <p>The role of an agony aunt is fundamentally about helping people clarify their options and choices. The act of writing to an agony aunt allows individuals to think through their choices and receive reassurance. <a href="https://inews.co.uk/inews-lifestyle/agony-aunt-column-why-still-endures-350-years-later-1905176">Agony aunts</a> provide a unique form of objectivity that we often can’t get from close friends.</p>
-<p>A crucial aspect of the agony aunt role is that they don’t act as moral judges of others’ behavior. They understand that life rarely presents black-and-white situations, instead operating in shades of grey. Our data source for this project comes from https://www.thesun.co.uk/dear-deidre.</p>
+<p>A crucial aspect of the agony aunt role is that they don’t act as moral judges of others’ behavior. They understand that life rarely presents black-and-white situations, instead operating in shades of grey. Our data source for this project comes from <a href="https://www.thesun.co.uk/dear-deidre">here</a>.</p>
 <p>The <a href="c123ian/dear_deidre_agony_aunt">Agony Aunt dataset</a> ‘Question’ column is a letter written to the agony aunt and their response/advice is saved in ‘Answer’ column.</p>
 <table class="caption-top table">
 <colgroup>
@@ -270,7 +271,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="selecting-llm-and-dataset" class="level2">
 <h2 class="anchored" data-anchor-id="selecting-llm-and-dataset">Selecting LLM and dataset</h2>
-<p>Make changes on teh main app, but also reflect tthese changes on your <code>download_model.py</code> and <code>download_faiss_data.py</code></p>
+<p>Make changes on the main app, but also reflect tthese changes on your <code>download_model.py</code> and <code>download_faiss_data.py</code></p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>MODELS_DIR <span class="op">=</span> <span class="st">"/llama_mini"</span> <span class="co"># Name of Volume we created via script </span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>MODEL_NAME <span class="op">=</span> <span class="st">"Llama-3.2-3B-Instruct"</span> <span class="co"># Matches model name from HuggingFace, so we know where to find weight/tokenizer</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>FAISS_DATA_DIR <span class="op">=</span> <span class="st">"/faiss_data"</span> <span class="co"># Name of Volume we created via script (RAG)</span></span>
@@ -341,7 +342,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="main-application-structure" class="level2">
 <h2 class="anchored" data-anchor-id="main-application-structure">Main Application Structure</h2>
-<p>The application architecture consists of two primary component<code>s: the backe</code>nd (serve_vllm()<code>) and frontend (</code>serve_fasthtml()). The backend creates an OpenAI-compatible API endpoint for LLM inference using vLLM, handling model/tokenizer loading, initialization, completions endpoint with streaming support, and managing sampling parameters and response generation.</p>
+<p>The application architecture consists of two primary components: the backend <code>serve_vllm()</code> and frontend <code>serve_fasthtml()</code>. The backend creates an OpenAI-compatible API endpoint for LLM inference using vLLM, handling model/tokenizer loading, initialization, completions endpoint with streaming support, and managing sampling parameters and response generation.</p>
 <p>The frontend implements a web interface with WebSocket support for real-time chat, integrating RAG using FAISS for semantic search of advice columns. It manages chat sessions and history through SQLite, handles retrieval and incorporation of relevant context, implements UI with status indicators and source attribution, streams responses from the vLLM server to the web interface, and displays top sources with similarity scores.</p>
 </section>
 <section id="gpu-selection-and-pricing" class="level2">
