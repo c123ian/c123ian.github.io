@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>c123ian.github.io - Cian Prendergast</title>
+<title>Cian Prendergast – c123ian.github.io</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -37,17 +37,23 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-ddd961a2510921635943dfbbd19534c4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -56,6 +62,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -91,8 +98,35 @@ ul.task-list li input[type="checkbox"] {
   })
   </script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="styles.css">
 </head>
@@ -100,38 +134,38 @@ ul.task-list li input[type="checkbox"] {
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">c123ian.github.io</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com" rel="" target=""><i class="bi bi-twitter" role="img">
+    <a class="nav-link" href="https://twitter.com"> <i class="bi bi-twitter" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
+          </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
 </div>
-          </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -144,7 +178,7 @@ ul.task-list li input[type="checkbox"] {
   </div>
     
   
-  <div class="quarto-title-meta">
+  <div class="quarto-title-meta column-page-left">
 
       
     
@@ -157,7 +191,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(7)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(8)</span></div></div></div>
 <!-- main -->
 <main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
 
@@ -168,153 +202,183 @@ ul.task-list li input[type="checkbox"] {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1698419759294" data-listing-reading-time-sort="30">
+<div class="quarto-post image-right" data-index="0" data-listing-file-modified-sort="1733146558143" data-listing-reading-time-sort="22" data-listing-word-count-sort="4271">
 <div class="thumbnail">
-<p><a href="./posts/a_Phi/Updated_Phi_blog.html"> <p class="card-img-top"><img src="posts\a_Phi\Updated_Phi_blog_files\figure-html\485f8f0c-58f9-4447-9db8-f9561fd6616b-1-aa481f05-5e44-47f4-8df6-0e62759ed7a2.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external"></a></p><a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external">
+<p class="card-img-top"><img src="posts\aa_Agony-aunt\images\vid_modal.gif"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/a_Phi/Updated_Phi_blog.html">
 <h3 class="no-anchor listing-title">
-<strong>Finetuning the phi-1.5 Language Model</strong> 📝
+<a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external">Aunt-ificial Intelligence: Learning from Life’s Dilemmas</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Fine-tuning a model, especially one as complex as phi-1.5, is an intricate endeavor demanding a judicious blend of techniques, optimizations, and a profound grasp of the…
+<a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external">The therapeutic effectiveness of artificial intelligence-based chatbots led me to look at uisng agony aunts to inform a LLM chatbot on their answers!</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/a_Phi/Updated_Phi_blog.html"> </a>
+<p><a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external"></a></p><a href="./posts/aa_Agony-aunt/agony_aunt_blog_post.html" class="no-external">
+</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1697900866827" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="1" data-listing-file-modified-sort="1733142482409" data-listing-reading-time-sort="30" data-listing-word-count-sort="5914">
 <div class="thumbnail">
-<p><a href="./posts/a_Web Scraping/blog_v2.html"> <p class="card-img-top"><img src="posts\a_Web Scraping\blog_v2_files\figure-html\7c36598c-c153-4efb-bf86-ad437150c365-2-6dbe077b-6667-47af-80dd-39cad71946d8.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external"></a></p><a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external">
+<p class="card-img-top"><img src="posts\a_Phi\Updated_Phi_blog_files\figure-html\485f8f0c-58f9-4447-9db8-f9561fd6616b-1-aa481f05-5e44-47f4-8df6-0e62759ed7a2.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/a_Web Scraping/blog_v2.html">
 <h3 class="no-anchor listing-title">
-A Unified Approach to Web Scraping 🌐
+<a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external"><strong>Finetuning the phi-1.5 Language Model</strong> 📝</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Every mission needs a clear objective. Khan Academy is a reservoir of educational content. Imagine its vast…
+<a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external">Fine-tuning a model, especially one as complex as phi-1.5, is an intricate endeavor demanding a judicious blend of techniques, optimizations, and a profound grasp of the…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/a_Web Scraping/blog_v2.html"> </a>
+<p><a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external"></a></p><a href="./posts/a_Phi/Updated_Phi_blog.html" class="no-external">
+</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1697548783901" data-listing-reading-time-sort="14">
+<div class="quarto-post image-right" data-index="2" data-listing-file-modified-sort="1733142482425" data-listing-reading-time-sort="9" data-listing-word-count-sort="1617">
 <div class="thumbnail">
-<p><a href="./posts/Bee/bee_blog_refined_v2.html"> <p class="card-img-top"><img src="posts\Bee\bee_blog_refined_v2_files\figure-html\1fe99388-8d12-467e-92bf-c79728fe3bc4-5-ec75f0d5-fd02-4e11-968a-99a0a9464a03.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/a_Web Scraping/blog_v2.html" class="no-external"></a></p><a href="./posts/a_Web Scraping/blog_v2.html" class="no-external">
+<p class="card-img-top"><img src="posts\a_Web Scraping\blog_v2_files\figure-html\7c36598c-c153-4efb-bf86-ad437150c365-2-6dbe077b-6667-47af-80dd-39cad71946d8.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/a_Web Scraping/blog_v2.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Bee/bee_blog_refined_v2.html">
 <h3 class="no-anchor listing-title">
-<strong>Using Deep Learning to Classify Bee Species: An In-Depth Guide</strong> 🐝
+<a href="./posts/a_Web Scraping/blog_v2.html" class="no-external">A Unified Approach to Web Scraping 🌐</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/a_Web Scraping/blog_v2.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-Bees play a pivotal role in maintaining our ecosystem. Yet, their diversity can be a challenge for even the most avid enthusiasts to discern. With over 20,000 recognized…
+<a href="./posts/a_Web Scraping/blog_v2.html" class="no-external">Every mission needs a clear objective. Khan Academy is a reservoir of educational content. Imagine its vast library as a series of interconnected textbooks. Each lesson is…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Bee/bee_blog_refined_v2.html"> </a>
+<p><a href="./posts/a_Web Scraping/blog_v2.html" class="no-external"></a></p><a href="./posts/a_Web Scraping/blog_v2.html" class="no-external">
+</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1697203577353" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="3" data-listing-file-modified-sort="1733142482300" data-listing-reading-time-sort="14" data-listing-word-count-sort="2752">
 <div class="thumbnail">
-<p><a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html"> <p class="card-img-top"><img src="posts\Bird\Bird_Visualisation_ver_HeatMap_files\figure-html\586ec758-1-07351f10-cf03-4a83-b60b-ec7ff5f7c9e1.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external"></a></p><a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external">
+<p class="card-img-top"><img src="posts\Bee\bee_blog_refined_v2_files\figure-html\1fe99388-8d12-467e-92bf-c79728fe3bc4-5-ec75f0d5-fd02-4e11-968a-99a0a9464a03.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html">
 <h3 class="no-anchor listing-title">
-Using Folium’s HeatMapWithTime to Unearth Geo-Data Insights: An Applied Walkthrough 🦅
+<a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external"><strong>Using Deep Learning to Classify Bee Species: An In-Depth Guide</strong> 🐝</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<em>By Cian Prendergast</em>
+<a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external">Bees play a pivotal role in maintaining our ecosystem. Yet, their diversity can be a challenge for even the most avid enthusiasts to discern. With over 20,000 recognized…</a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html"> </a>
+<p><a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external"></a></p><a href="./posts/Bee/bee_blog_refined_v2.html" class="no-external">
+</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1697206689679" data-listing-reading-time-sort="16">
+<div class="quarto-post image-right" data-index="4" data-listing-file-modified-sort="1733142482331" data-listing-reading-time-sort="7" data-listing-word-count-sort="1332">
 <div class="thumbnail">
-<p><a href="./posts/House/House_Blog_v2.html"> <p class="card-img-top"><img src="posts\House\House_Blog_v2_files\figure-html\0f31ece4-bd04-47e2-b0bb-c5c675985f4b-1-192d707e-76ca-4a6b-b2b7-6b6fbc053c37.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external"></a></p><a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external">
+<p class="card-img-top"><img src="posts\Bird\Bird_Visualisation_ver_HeatMap_files\figure-html\586ec758-1-07351f10-cf03-4a83-b60b-ec7ff5f7c9e1.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/House/House_Blog_v2.html">
 <h3 class="no-anchor listing-title">
-Dublin’s Property Prices: A Spatial Perspective 🏠
+<a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external">Using Folium’s HeatMapWithTime to Unearth Geo-Data Insights: An Applied Walkthrough 🦅</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<em>By Cian Prendergast</em>
+<a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external"><em>By Cian Prendergast</em></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/House/House_Blog_v2.html"> </a>
+<p><a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external"></a></p><a href="./posts/Bird/Bird_Visualisation_ver_HeatMap.html" class="no-external">
+</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1697626014318" data-listing-reading-time-sort="23">
+<div class="quarto-post image-right" data-index="5" data-listing-file-modified-sort="1733142482347" data-listing-reading-time-sort="16" data-listing-word-count-sort="3018">
 <div class="thumbnail">
-<p><a href="./posts/SQuAD/squad.html"> <p class="card-img-top"><img src="posts\SQuAD\squad_files\figure-html\5f449bbe-ddbf-414c-98e8-8c0b0ac6e49f-1-295c6d82-cdae-4761-8482-e3bb724cbefb.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/House/House_Blog_v2.html" class="no-external"></a></p><a href="./posts/House/House_Blog_v2.html" class="no-external">
+<p class="card-img-top"><img src="posts\House\House_Blog_v2_files\figure-html\0f31ece4-bd04-47e2-b0bb-c5c675985f4b-1-192d707e-76ca-4a6b-b2b7-6b6fbc053c37.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/House/House_Blog_v2.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/SQuAD/squad.html">
 <h3 class="no-anchor listing-title">
-<strong>Extractive Question Answering with Data from Dell Forums</strong> ⛏️
+<a href="./posts/House/House_Blog_v2.html" class="no-external">Dublin’s Property Prices: A Spatial Perspective 🏠</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/House/House_Blog_v2.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<em>By Cian Prendergast</em>
+<a href="./posts/House/House_Blog_v2.html" class="no-external"><em>By Cian Prendergast</em></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/SQuAD/squad.html"> </a>
+<p><a href="./posts/House/House_Blog_v2.html" class="no-external"></a></p><a href="./posts/House/House_Blog_v2.html" class="no-external">
+</a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-listing-file-modified-sort="1697288187703" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="6" data-listing-file-modified-sort="1733142482371" data-listing-reading-time-sort="23" data-listing-word-count-sort="4458">
 <div class="thumbnail">
-<p><a href="./posts/ULMFiT/Dell_LSTM_Blog.html"> <p class="card-img-top"><img src="posts\ULMFiT\Dell_LSTM_Blog_files\figure-html\93f3b66a-fb7f-4b07-b5b4-9a0f1bf34961-2-4df2b11e-22a0-470a-b4cb-0a0dfce37389.png"  class="thumbnail-image card-img"/></p> </a></p>
+<p><a href="./posts/SQuAD/squad.html" class="no-external"></a></p><a href="./posts/SQuAD/squad.html" class="no-external">
+<p class="card-img-top"><img src="posts\SQuAD\squad_files\figure-html\5f449bbe-ddbf-414c-98e8-8c0b0ac6e49f-1-295c6d82-cdae-4761-8482-e3bb724cbefb.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/SQuAD/squad.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="./posts/ULMFiT/Dell_LSTM_Blog.html">
 <h3 class="no-anchor listing-title">
-Dell Technical Support Email Classification: A Deep Dive
+<a href="./posts/SQuAD/squad.html" class="no-external"><strong>Extractive Question Answering with Data from Dell Forums</strong> ⛏️</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="./posts/SQuAD/squad.html" class="no-external"></a>
 </div>
 <div class="listing-description">
-<em>by Cian Prendergast</em>
+<a href="./posts/SQuAD/squad.html" class="no-external"><em>By Cian Prendergast</em></a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="./posts/ULMFiT/Dell_LSTM_Blog.html"> </a>
+<p><a href="./posts/SQuAD/squad.html" class="no-external"></a></p><a href="./posts/SQuAD/squad.html" class="no-external">
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-listing-file-modified-sort="1733142482378" data-listing-reading-time-sort="15" data-listing-word-count-sort="2843">
+<div class="thumbnail">
+<p><a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external"></a></p><a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external">
+<p class="card-img-top"><img src="posts\ULMFiT\Dell_LSTM_Blog_files\figure-html\93f3b66a-fb7f-4b07-b5b4-9a0f1bf34961-2-4df2b11e-22a0-470a-b4cb-0a0dfce37389.png"  class="thumbnail-image card-img"/></p>
+</a><p><a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external"></a></p>
+</div>
+<div class="body">
+<h3 class="no-anchor listing-title">
+<a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external">Dell Technical Support Email Classification: A Deep Dive</a>
+</h3>
+<div class="listing-subtitle">
+<a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external"></a>
+</div>
+<div class="listing-description">
+<a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external"><em>by Cian Prendergast</em></a>
+</div>
+</div>
+<div class="metadata">
+<p><a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external"></a></p><a href="./posts/ULMFiT/Dell_LSTM_Blog.html" class="no-external">
+</a>
 </div>
 </div>
 </div>
@@ -357,18 +421,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -400,11 +453,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -414,8 +504,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -427,7 +526,129 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -471,6 +692,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -496,6 +718,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -556,6 +804,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
